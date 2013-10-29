@@ -14,7 +14,7 @@
 		/**
 		 * Default constructor for the class
 		 */
-		public void Player(String player)
+		public void setPlayer(String player)
 		{
 			this.player = player;
 		}
