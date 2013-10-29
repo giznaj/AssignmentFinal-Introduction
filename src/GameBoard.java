@@ -10,15 +10,19 @@ import java.util.ArrayList;
 public class GameBoard 
 {	
 	/**
+	 * Array that holds the 100 coordinates of the BattleShip gameboard
+	 */
+	public ArrayList<GameBoard> gameBoardArray;
+	
+	/**
 	 * Main method() for this class.  Instantiates this.class
 	 * @param args
 	 */
 	public static void main(String[] args)
 	{
-		
-		GameBoard BattleBegins = new GameBoard();
-		BattleBegins.buildTheBoard();
-		BattleBegins.displayTheBoard();
+		GameBoard NewGameBoard = new GameBoard();
+		NewGameBoard.buildTheBoard();
+		NewGameBoard.displayTheBoard();
 	}
 
 	/**
@@ -34,14 +38,17 @@ public class GameBoard
 	 * This method is invoked from the War3 class.
 	 */
 	public void buildTheBoard()
-	{	
-		 = new ArrayList<Card>(64);
-		for(totalCardSuits = 0; totalCardSuits < 4; ++totalCardSuits) //suits
+	{
+		int xCoordinate;
+		int yCoordinate;
+		
+		gameBoardArray = new ArrayList<Coordinates>(64);
+		for(xCoordinate = 0; xCoordinate < 10; ++xCoordinate) //x coordinate
 		{
-			for(totalCardNumbers = 0; totalCardNumbers < 13; ++totalCardNumbers) //numbers
+			for(yCoordinate = 0; yCoordinate < 10; ++yCoordinate) //y coordinate
 			{
-				Card TempCard = new Card(totalCardSuits, totalCardNumbers);
-				deckOfCards.add(TempCard);
+				Coordinates TempCoordinate = new Coordinates(xCoordinate, yCoordinate);
+				gameBoardArray.add(TempCoordinate);
 			}
 		}
 	}
@@ -53,9 +60,9 @@ public class GameBoard
 	{
 		System.out.println("BattleShip Board");
 		System.out.println("=====================");
-		for(int x = 0; x < 52; ++x)
+		for(int x = 0; x < 100; ++x)
 		{
-			System.out.println("Card " + (x + 1) + " : " + deckOfCards.get(x).getCardNum() + " of " + deckOfCards.get(x).getCardSuit());
+			System.out.println("Card " + (x + 1) + " : " + gameBoardArray.get(x).getXCoordinate() + " of " + gameBoardArray.get(x).getYCoordinate());
 		}
 	} 
 }
