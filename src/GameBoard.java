@@ -12,7 +12,7 @@ public class GameBoard
 	/**
 	 * Array that holds the 100 coordinates of the BattleShip gameboard
 	 */
-	public ArrayList<GameBoard> gameBoardArray;
+	public ArrayList<Coordinates> gameBoardArray;
 	
 	/**
 	 * Main method() for this class.  Instantiates this.class
@@ -62,7 +62,7 @@ public class GameBoard
 		System.out.println("=====================");
 		for(int x = 0; x < 100; ++x)
 		{
-			System.out.println("Card " + (x + 1) + " : " + gameBoardArray.get(x).getXCoordinate() + " of " + gameBoardArray.get(x).getYCoordinate());
+			System.out.println("Coordinate " + (x + 1) + " : " + gameBoardArray.get(x).getXCoordinate() + "-" + gameBoardArray.get(x).getYCoordinate());
 		}
 	} 
 }
