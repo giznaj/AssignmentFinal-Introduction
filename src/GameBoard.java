@@ -30,7 +30,7 @@ public class GameBoard
 	 */
 	public GameBoard() 
 	{
-		// not used
+		
 	}
 	
 	/**
