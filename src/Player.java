@@ -1,6 +1,6 @@
 /** Description of Player.java
  * Represents the either the 'Player' or the 'Computer' in the game of BattleShip 
- * Assignenment #4
+ * Assignment #4
  *
  * @author Aaron Toth
  */
@@ -12,9 +12,9 @@
 		private String player;
 		
 		/**
-		 * Default constructor for the class
+		 * Constructor : Overloaded constructor for the class that takes a String as a parameter
 		 */
-		public void setPlayer(String player)
+		public Player(String player)
 		{
 			this.player = player;
 		}
