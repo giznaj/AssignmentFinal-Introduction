@@ -60,7 +60,7 @@ public class GameBoard
 		{
 			for(xCoordinate = 0; xCoordinate < 8; ++xCoordinate) //X coordinate
 			{
-				System.out.print(String.format("%2c%2d ", yCoordinate, xCoordinate));
+				System.out.print(String.format("%c%d ", yCoordinate, xCoordinate));
 				counter++;
     	
 				if (counter == 8)

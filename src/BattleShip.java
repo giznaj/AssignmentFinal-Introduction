@@ -39,6 +39,7 @@ public class BattleShip
 		System.out.println("Your name please?");
 		playerName = kb.next();
 		System.out.println("Thanks and good luck " + playerName + "!  You'll need it - hehehehe");
+		kb.close();
 		System.out.println();
 		
 		// constructors : the players of the game (player versus computer)
