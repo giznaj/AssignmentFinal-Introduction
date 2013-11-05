@@ -1,5 +1,3 @@
-import java.util.ArrayList;
-
 /** Description of GameBoard.java
  * Application generates an array of 64 "coordinates" on a 'BattleShip' game board. The board consists of 
  * 8 rows and 8 columns.  The original game was a 10 by 10 square.  There are no duplicates in the array.
@@ -12,37 +10,65 @@ public class GameBoard
 	/**
 	 * Array that holds the 100 coordinates of the BattleShip gameboard
 	 */
-	private ArrayList<Coordinates> gameBoardArray;
+	private Coordinates[][] objectArray;
 	
+	/**
+	 * X and Y coordinates that make up the String pair (i.e. B4)
+	 */
+	private int xCoordinate;
+	private int yCoordinate;
 	
+	/**
+	 * Builds the game board
+	 */
 	public GameBoard()
-	{
-		int xCoordinate;
-		int yCoordinate;
+	{	
+		objectArray = new Coordinates[8][8];
 		
-		gameBoardArray = new ArrayList<Coordinates>(64);
-		for(xCoordinate = 0; xCoordinate < 8; ++xCoordinate) //x coordinate
+		for(yCoordinate = 0; yCoordinate < 8; ++yCoordinate) //Y coordinate
 		{
-			for(yCoordinate = 0; yCoordinate < 8; ++yCoordinate) //y coordinate
+			for(xCoordinate = 0; xCoordinate < 8; ++xCoordinate) //X coordinate
 			{
-				Coordinates TempCoordinate = new Coordinates(xCoordinate, yCoordinate);
-				gameBoardArray.add(TempCoordinate);
+				objectArray[yCoordinate][xCoordinate] = new Coordinates(yCoordinate, xCoordinate);
 			}
 		}
 	}
 	
 	/**
-	 * Method that displays the array of Card objects
+	 * test purposes : shows the array(s), their indexes and the values at each index
 	 */
-	public void displayTheBoard(Player Competitor)
+	public void testDisplayBoard(Player Competitor)
 	{
 		System.out.println("BattleShip Board for: " + Competitor.getPlayer());
-		System.out.println("===================");
-		for(int x = 0; x < 64; ++x)
+		System.out.println("===========================");
+		for(yCoordinate = 0; yCoordinate < 8; ++yCoordinate) //Y coordinate
 		{
-			System.out.println("Coordinate " + (x + 1) + " : " + gameBoardArray.get(x).getXCoordinate() + "-" + gameBoardArray.get(x).getYCoordinate());
+			for(xCoordinate = 0; xCoordinate < 8; ++xCoordinate) //X coordinate
+			{
+				System.out.println("objectArray @ index[" + yCoordinate + "][" + xCoordinate + "] = " + objectArray[yCoordinate][xCoordinate].getYCoordinate() + objectArray[yCoordinate][xCoordinate].getXCoordinate());
+			}
 		}
 		
 		System.out.println();
 	} 
+	
+	
+	public void plotBoardToScreen()
+	{
+		int counter = 0;
+		for(yCoordinate = 0; yCoordinate < 8; ++yCoordinate) //Y coordinate
+		{
+			for(xCoordinate = 0; xCoordinate < 8; ++xCoordinate) //X coordinate
+			{
+				System.out.print(String.format("%2c%2d ", yCoordinate, xCoordinate));
+				counter++;
+    	
+				if (counter == 8)
+				{
+					System.out.println();
+					counter = 0;
+				}
+			}
+		}
+	}
 }

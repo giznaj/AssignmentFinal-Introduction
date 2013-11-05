@@ -1,28 +1,28 @@
 /** Description of Coordinates.java
  * Represents Coordinates on a 10 x 10 BattleShip Gameboard
- * Assignenment #4
+ * Assignment #4
  *
  * @author Aaron Toth
  */
 	public class Coordinates
 	{
 		/**
-		 * x coordinate part of a x,y coordinate combination
+		 * X coordinate part of a x,y coordinate combination (i.e.  0,1,2,3...)
 		 */
-		private char xCoordinate;
+		private int xCoordinate;
 		
 		/**
-		 * y coordinate part of a x,y coordinate combination
+		 * Y coordinate part of a x,y coordinate combination (i.e. A,B,C,D...)
 		 */
-		private int yCoordinate;
+		private char yCoordinate;
 		
 	    /**
 	     * Default constructor for the Card class
 	     */
 		public Coordinates()
 		{
-			xCoordinate = 'A';
-			yCoordinate = 0;
+			xCoordinate = '0';
+			yCoordinate = 'A';
 		}
 		
 		/**
@@ -30,19 +30,19 @@
 		 * @param xIntCoordinate
 		 * @param yCoordinate
 		 */
-		public Coordinates(int xIntCoordinate, int yCoordinate)
+		public Coordinates(int yIntCoordinate, int xIntCoordinate)
 		{	
-			if((xIntCoordinate >= 0 && xIntCoordinate < 10) && (yCoordinate >= 0 && yCoordinate < 10))
+			if((yCoordinate >= 0 && yCoordinate < 8) && (xIntCoordinate >= 0 && xIntCoordinate < 8))
 			{
-				char[] xCoordinateArray = new char[]{'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'};
-				xCoordinate = xCoordinateArray[xIntCoordinate];
-				this.yCoordinate = yCoordinate;
+				char[] yCoordinateArray = new char[]{'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'};
+				yCoordinate = yCoordinateArray[yIntCoordinate];
+				xCoordinate = xIntCoordinate;
 			}
 			
 			else
 			{
-				System.out.println("Possible Error: 'X Coordinate' can only accept numbers (0-9) and " + xIntCoordinate + " was sent in the constructor");
-				System.out.println("Possible Error: 'Y Coordinate' can only accept numbers (0-9) and " + yCoordinate + " was sent in the constructor");
+				System.out.println("Possible Error: 'X Coordinate' can only accept numbers (0-7) and " + xIntCoordinate + " was sent in the constructor");
+				System.out.println("Possible Error: 'Y Coordinate' can only accept numbers (0-7) and " + yCoordinate + " was sent in the constructor");
 				System.out.println("Please make sure to only send the approvaite values in range");
 			}
 		}
@@ -52,7 +52,7 @@
 		 * Method returns the xCoordinate field value to the calling method
 		 * @return
 		 */
-		public char getXCoordinate()
+		public int getXCoordinate()
 		{
 			return xCoordinate;
 		}
@@ -61,7 +61,7 @@
 		 * Method returns the yCoordinate field value to the calling method
 		 * @return
 		 */
-		public int getYCoordinate()
+		public char getYCoordinate()
 		{
 			return yCoordinate;
 		}

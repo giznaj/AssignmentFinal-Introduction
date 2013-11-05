@@ -9,18 +9,50 @@ import java.util.Scanner;
  * @author Aaron Toth
  */
 public class BattleShip
-{
+{	
+	/**
+	 * Class variables.  There is a 1:1 of GameBoard to Player object
+	 */
+	GameBoard UserBoard;
+	GameBoard ComputerBoard;
+	Player UserPlayer;
+	Player UserComputer;
+	
+	
 	/**
 	 * @param args
 	 */
 	public static void main(String[] args)
 	{
+		BattleShip newBattle = new BattleShip();
+		newBattle.playBattleShip();
+	}
+	
+	/**
+	 * This method gathers the details of the user and then constructs the objects for the game
+	 */
+	public void playBattleShip()
+	{
 		String playerName;
+		
 		Scanner kb = new Scanner(System.in);
 		System.out.println("Your name please?");
 		playerName = kb.next();
-		System.out.println("Welcome " + playerName);
+		System.out.println("Thanks and good luck " + playerName + "!  You'll need it - hehehehe");
+		System.out.println();
 		
-		GameBoard newGame = new GameBoard();
+		// constructors : the players of the game (player versus computer)
+		UserPlayer = new Player(playerName);
+		UserComputer = new Player("HAL");
+		
+		// constructors : each game board for each of the players
+		UserBoard = new GameBoard();
+		ComputerBoard = new GameBoard();
+		
+		//test purposes : shows the array(s), their indexes and the values at each index
+		//UserBoard.testDisplayBoard();
+		//ComputerBoard.testDisplayBoard();
+		
+		UserBoard.plotBoardToScreen();
 	}
 }

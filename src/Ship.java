@@ -1,7 +1,7 @@
 /** Description of Ship.java
  * Represents the different ships and vessels one can use in the popular 
  * game of "BattleShip".
- * Assignenment #4
+ * Assignment #4
  *
  * @author Aaron Toth
  */
