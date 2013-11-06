@@ -38,9 +38,7 @@ public class BattleShip
 		Scanner kb = new Scanner(System.in);
 		System.out.println("Your name please?");
 		playerName = kb.next();
-		System.out.println("Thanks and good luck " + playerName + "!  You'll need it - hehehehe");
-		kb.close();
-		System.out.println();
+		System.out.println("Thanks and good luck " + playerName + "!  You'll need it - hehe...");
 		
 		// constructors : the players of the game (player versus computer)
 		UserPlayer = new Player(playerName);
@@ -51,9 +49,17 @@ public class BattleShip
 		ComputerBoard = new GameBoard();
 		
 		//test purposes : shows the array(s), their indexes and the values at each index
-		//UserBoard.testDisplayBoard();
-		//ComputerBoard.testDisplayBoard();
+		//UserBoard.testDisplayBoard(UserPlayer);
+		//ComputerBoard.testDisplayBoard(UserComputer);
 		
-		UserBoard.plotBoardToScreen();
+		String shipOneCoordinates;
+		System.out.print(playerName + " Please pick a spot to place your first 1x1 ship? (i.e. C4)");
+		shipOneCoordinates = kb.next();
+		
+		// sends the first ships coordinates.  1st ship is a 1x1 for both the player and the computer
+		UserBoard.placeShip(shipOneCoordinates);
+		
+		UserBoard.plotBoardToScreen(UserPlayer);
+		
 	}
 }

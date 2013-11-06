@@ -17,13 +17,23 @@
 		 */
 		private int shipLength;
 		
+		/**
+		 * Boolean value for the ship's 'Sunk' status. (if the ship is sunk, isSunk = true)
+		 */
+		private boolean isSunk = false;
+		
+		/**
+		 * Boolean value for the ship's 'Hit' status.  (if the ship is hit, isHit = true)
+		 */
+		private boolean isHit = false;
+		
 	    /**
 	     * Default constructor for the Card class
 	     */
 		public Ship()
 		{
-			shipType = "battleship";
-			shipLength = 4;
+			shipType = "patrol boat";
+			shipLength = 1;
 		}
 		
 		/**
@@ -35,6 +45,23 @@
 		{	
 			this.shipType = shipType;
 			this.shipLength = shipLength;
+		}
+		
+		
+		/**
+		 * Sets the 'isHit' boolean expression to 'true' upon the first hit of the ship
+		 */
+		public void setIsHit()
+		{
+			isHit = true;
+		}
+		
+		/**
+		 * Sets the 'isHit' boolean expression to 'true' upon the 
+		 */
+		public void setIsSunk()
+		{
+			isHit = true;
 		}
 		
 		
@@ -54,5 +81,23 @@
 		public int getShipLength()
 		{
 			return shipLength;
+		}
+		
+		/**
+		 * Method returns the ships 'isSunk' status to the calling method
+		 * @return
+		 */
+		public boolean getIsSunk()
+		{
+			return isSunk;
+		}
+		
+		/**
+		 * Method returns the ships 'isHit' status t othe calling method
+		 * @return
+		 */
+		public boolean getIsHit()
+		{
+			return isHit;
 		}
 	}

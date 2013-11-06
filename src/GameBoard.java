@@ -12,11 +12,15 @@ public class GameBoard
 	 */
 	private Coordinates[][] objectArray;
 	
+	private Ship playerFirstShip;
+	private Ship computerFirstShip;
+	
 	/**
 	 * X and Y coordinates that make up the String pair (i.e. B4)
 	 */
 	private int xCoordinate;
 	private int yCoordinate;
+	private String yStrCoordinate;
 	
 	/**
 	 * Builds the game board
@@ -35,27 +39,28 @@ public class GameBoard
 	}
 	
 	/**
-	 * test purposes : shows the array(s), their indexes and the values at each index
+	 * Method places the vessels on the board.
 	 */
-	public void testDisplayBoard(Player Competitor)
+	public void placeShip(String shipOneCoordinates)
 	{
-		System.out.println("BattleShip Board for: " + Competitor.getPlayer());
-		System.out.println("===========================");
-		for(yCoordinate = 0; yCoordinate < 8; ++yCoordinate) //Y coordinate
-		{
-			for(xCoordinate = 0; xCoordinate < 8; ++xCoordinate) //X coordinate
-			{
-				System.out.println("objectArray @ index[" + yCoordinate + "][" + xCoordinate + "] = " + objectArray[yCoordinate][xCoordinate].getYCoordinate() + objectArray[yCoordinate][xCoordinate].getXCoordinate());
-			}
-		}
+		yCoordinate = shipOneCoordinates.charAt(0);
+		xCoordinate = shipOneCoordinates.charAt(1);
 		
-		System.out.println();
-	} 
+	}
 	
 	
-	public void plotBoardToScreen()
+	
+	/**
+	 * Method plots the game board to the screen for the player or computer
+	 * @param Competitor
+	 */
+	public void plotBoardToScreen(Player Competitor)
 	{
 		int counter = 0;
+		
+		System.out.println("BattleShip Board for: " + Competitor.getPlayer());
+		System.out.println("===========================");
+		
 		for(yCoordinate = 0; yCoordinate < 8; ++yCoordinate) //Y coordinate
 		{
 			for(xCoordinate = 0; xCoordinate < 8; ++xCoordinate) //X coordinate
@@ -70,5 +75,23 @@ public class GameBoard
 				}
 			}
 		}
+		
+		System.out.println();
 	}
+	
+	/**
+	 * test purposes : shows the array(s), their indexes and the values at each index
+	 */
+	public void testDisplayBoard(Player Competitor)
+	{
+		for(yCoordinate = 0; yCoordinate < 8; ++yCoordinate) //Y coordinate
+		{
+			for(xCoordinate = 0; xCoordinate < 8; ++xCoordinate) //X coordinate
+			{
+				System.out.println("objectArray @ index[" + yCoordinate + "][" + xCoordinate + "] = " + objectArray[yCoordinate][xCoordinate].getYIntCoordinate() + objectArray[yCoordinate][xCoordinate].getXIntCoordinate());
+			}
+		}
+		
+		System.out.println();
+	} 
 }
