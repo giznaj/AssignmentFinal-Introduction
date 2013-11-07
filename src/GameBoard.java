@@ -12,8 +12,13 @@ public class GameBoard
 	 */
 	private Coordinates[][] objectArray;
 	
-	private Ship playerFirstShip;
-	private Ship computerFirstShip;
+	/**
+	 * Player and Computer 'Ship' objects
+	 */
+	private Ship PlayerDestroyerShip;
+	private Ship ComputerDestroyerShip;
+	private Ship PlayerSubShip;
+	private Ship ComputerSubShip;
 	
 	/**
 	 * X and Y coordinates that make up the String pair (i.e. B4).  Need this variables for when the user inputs
@@ -63,7 +68,6 @@ public class GameBoard
 			
 			else
 			{
-				System.out.println(counter);
 				counter++;
 			}
 		}while(yIntCoordinate != counter);
@@ -71,6 +75,12 @@ public class GameBoard
 		if(objectArray[yIntCoordinate][xIntCoordinate].getIsOccupied() == false)
 		{
 			objectArray[yIntCoordinate][xIntCoordinate].setIsOccupied();
+			System.out.println("You have successfully placed your 1x1 destroyer on " + shipOneCoordinates);
+		}
+		
+		else
+		{
+			System.out.println("Coordinates " + shipOneCoordinates + " have already been selected");
 		}
 	}
 	

@@ -26,20 +26,10 @@
 		 */
 		private String coordinatePair;
 		
-		
 		/**
 		 * Boolean value for this coordinates 'occupied status.  (if the ship is on the coordinate, isOccupied = true)
 		 */
 		private boolean isOccupied = false;
-		
-	    /**
-	     * Default constructor for the Card class
-	     */
-		public Coordinates()
-		{
-			yIntCoordinate = '0';
-			yCharCoordinate = 'A';
-		}
 		
 		/**
 		 * Overloaded constructor for the Coordinate class.  Builds the Object for the Array in GameBoard.java
@@ -73,7 +63,6 @@
 		{
 			isOccupied = true;
 		}
-		
 		
 		/**
 		 * Method returns the xCoordinate field value to the calling method
@@ -119,6 +108,5 @@
 		public boolean getIsOccupied()
 		{
 			return isOccupied;
-		}
-		
+		}		
 	}
