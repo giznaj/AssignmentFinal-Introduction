@@ -16,11 +16,15 @@ public class GameBoard
 	private Ship computerFirstShip;
 	
 	/**
-	 * X and Y coordinates that make up the String pair (i.e. B4)
+	 * X and Y coordinates that make up the String pair (i.e. B4).  Need this variables for when the user inputs
+	 * a String value (i.e. B4) for either placing their ship on the board or attacking the computer ship(s).  The 
+	 * String is parsed into a 'char' and int.  The 'char' is then converted to it's corresponding int value.  Finally the 
+	 * 2 new int values are sent over as parameters (coordinates). 
 	 */
-	private int xCoordinate;
-	private int yCoordinate;
-	private String yStrCoordinate;
+	private int xIntCoordinate;
+	private char yCharCoordinate;
+	private int yIntCoordinate;
+	
 	
 	/**
 	 * Builds the game board
@@ -29,11 +33,11 @@ public class GameBoard
 	{	
 		objectArray = new Coordinates[8][8];
 		
-		for(yCoordinate = 0; yCoordinate < 8; ++yCoordinate) //Y coordinate
+		for(yIntCoordinate = 0; yIntCoordinate < 8; ++yIntCoordinate) //Y coordinate
 		{
-			for(xCoordinate = 0; xCoordinate < 8; ++xCoordinate) //X coordinate
+			for(xIntCoordinate = 0; xIntCoordinate < 8; ++xIntCoordinate) //X coordinate
 			{
-				objectArray[yCoordinate][xCoordinate] = new Coordinates(yCoordinate, xCoordinate);
+				objectArray[yIntCoordinate][xIntCoordinate] = new Coordinates(yIntCoordinate, xIntCoordinate);
 			}
 		}
 	}
@@ -43,12 +47,32 @@ public class GameBoard
 	 */
 	public void placeShip(String shipOneCoordinates)
 	{
-		yCoordinate = shipOneCoordinates.charAt(0);
-		xCoordinate = shipOneCoordinates.charAt(1);
+		yCharCoordinate = shipOneCoordinates.charAt(0); //parse at index[0] to get the char part
+		xIntCoordinate = Character.getNumericValue(shipOneCoordinates.charAt(1)); //parse at index[1] to get int part
 		
+		//convert yCharCoordinate into it's corresponding int value
+		char[] yCharArray = new char[]{'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'};
+		int counter = 0;
+		yIntCoordinate = 0; // re-initialize variable
+		do
+		{
+			if(yCharCoordinate == yCharArray[counter])
+			{
+				yIntCoordinate = counter;
+			}
+			
+			else
+			{
+				System.out.println(counter);
+				counter++;
+			}
+		}while(yIntCoordinate != counter);
+		
+		if(objectArray[yIntCoordinate][xIntCoordinate].getIsOccupied() == false)
+		{
+			objectArray[yIntCoordinate][xIntCoordinate].setIsOccupied();
+		}
 	}
-	
-	
 	
 	/**
 	 * Method plots the game board to the screen for the player or computer
@@ -57,15 +81,15 @@ public class GameBoard
 	public void plotBoardToScreen(Player Competitor)
 	{
 		int counter = 0;
-		
 		System.out.println("BattleShip Board for: " + Competitor.getPlayer());
 		System.out.println("===========================");
 		
-		for(yCoordinate = 0; yCoordinate < 8; ++yCoordinate) //Y coordinate
+		for(yIntCoordinate = 0; yIntCoordinate < 8; ++yIntCoordinate) //Y coordinate
 		{
-			for(xCoordinate = 0; xCoordinate < 8; ++xCoordinate) //X coordinate
+			for(xIntCoordinate = 0; xIntCoordinate < 8; ++xIntCoordinate) //X coordinate
 			{
-				System.out.print(String.format("%c%d ", yCoordinate, xCoordinate));
+				System.out.printf("%s ", objectArray[yIntCoordinate][xIntCoordinate].getCoordinatePair());
+				//System.out.printf(String.format("%d%d ", yIntCoordinate, xIntCoordinate));
 				counter++;
     	
 				if (counter == 8)
@@ -78,20 +102,4 @@ public class GameBoard
 		
 		System.out.println();
 	}
-	
-	/**
-	 * test purposes : shows the array(s), their indexes and the values at each index
-	 */
-	public void testDisplayBoard(Player Competitor)
-	{
-		for(yCoordinate = 0; yCoordinate < 8; ++yCoordinate) //Y coordinate
-		{
-			for(xCoordinate = 0; xCoordinate < 8; ++xCoordinate) //X coordinate
-			{
-				System.out.println("objectArray @ index[" + yCoordinate + "][" + xCoordinate + "] = " + objectArray[yCoordinate][xCoordinate].getYIntCoordinate() + objectArray[yCoordinate][xCoordinate].getXIntCoordinate());
-			}
-		}
-		
-		System.out.println();
-	} 
 }

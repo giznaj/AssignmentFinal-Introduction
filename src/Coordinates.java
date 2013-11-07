@@ -21,6 +21,11 @@
 		 */
 		private char yCharCoordinate;
 		
+		/**
+		 * String of the concatenation of the 'char' and the 'int' values (i.e. 'A' + 4 = "A4")
+		 */
+		private String coordinatePair;
+		
 		
 		/**
 		 * Boolean value for this coordinates 'occupied status.  (if the ship is on the coordinate, isOccupied = true)
@@ -49,6 +54,7 @@
 				yCharCoordinate = yCharArray[yIntCoordinate];
 				this.yIntCoordinate = yIntCoordinate;
 				this.xIntCoordinate = xIntCoordinate;
+				coordinatePair = yCharCoordinate + "" + xIntCoordinate;
 			}
 			
 			else
@@ -59,7 +65,10 @@
 			}
 		}
 		
-		
+		/**
+		 * Sets the boolean value IsOccupied to true. (if ship occupies coordinates, 'isOccupied' becomes true).  When this 
+		 * flag is true, another ship cannot occupy this coordinate.
+		 */
 		public void setIsOccupied()
 		{
 			isOccupied = true;
@@ -91,6 +100,25 @@
 		public char getYCharCoordinate()
 		{
 			return yCharCoordinate;
+		}
+		
+		/**
+		 * Method returns the value assigned to the coordinatePair field.
+		 * @return
+		 */
+		public String getCoordinatePair()
+		{
+			coordinatePair = getYCharCoordinate() + "" + getXIntCoordinate();
+			return coordinatePair;
+		}
+		
+		/**
+		 * Method returns the Boolean value for t
+		 * @return
+		 */
+		public boolean getIsOccupied()
+		{
+			return isOccupied;
 		}
 		
 	}
