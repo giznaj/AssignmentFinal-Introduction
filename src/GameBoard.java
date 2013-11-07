@@ -1,7 +1,9 @@
+import java.util.Random;
+
 /** Description of GameBoard.java
  * Application generates an array of 64 "coordinates" on a 'BattleShip' game board. The board consists of 
  * 8 rows and 8 columns.  The original game was a 10 by 10 square.  There are no duplicates in the array.
- * Assignment #4
+ * Assignment Final (#4)
  *
  * @author Aaron Toth
  */
@@ -10,7 +12,7 @@ public class GameBoard
 	/**
 	 * Array that holds the 100 coordinates of the BattleShip gameboard
 	 */
-	private Coordinates[][] objectArray;
+	private Coordinates[][] objectArray;	
 	
 	/**
 	 * Player and Computer 'Ship' objects
@@ -19,6 +21,11 @@ public class GameBoard
 	private Ship ComputerDestroyerShip;
 	private Ship PlayerSubShip;
 	private Ship ComputerSubShip;
+	
+	/**
+	 * competitor who owns this.GameBoard
+	 */
+	private String competitor;
 	
 	/**
 	 * X and Y coordinates that make up the String pair (i.e. B4).  Need this variables for when the user inputs
@@ -30,14 +37,17 @@ public class GameBoard
 	private char yCharCoordinate;
 	private int yIntCoordinate;
 	
+	//constructors : 2 competitors in the game of battleship (player and computer)
+	Player UserPlayer = new Player(competitor);
+	Player ComputerPlayer = new Player(competitor);
 	
 	/**
 	 * Builds the game board
 	 */
-	public GameBoard()
-	{	
+	public GameBoard(String competitor)
+	{
+		this.competitor = competitor; //holds the value of the competitors name for this.GameBoard
 		objectArray = new Coordinates[8][8];
-		
 		for(yIntCoordinate = 0; yIntCoordinate < 8; ++yIntCoordinate) //Y coordinate
 		{
 			for(xIntCoordinate = 0; xIntCoordinate < 8; ++xIntCoordinate) //X coordinate
@@ -48,17 +58,30 @@ public class GameBoard
 	}
 	
 	/**
-	 * Method places the vessels on the board.
+	 * Method sets the computers 1x1 ship on the computer's game board.  Doesn't check if coordinate is already occupied
 	 */
-	public void placeShip(String shipOneCoordinates)
+	public void placeComputerShips()
+	{
+		final Random randomGenNumber = new Random();
+		int yIntCoordinate;
+		int xIntCoordinate;
+		yIntCoordinate = randomGenNumber.nextInt(7);
+		xIntCoordinate = randomGenNumber.nextInt(7);
+		System.out.println(yIntCoordinate + "" + xIntCoordinate);
+		objectArray[yIntCoordinate][xIntCoordinate].setIsOccupied();
+	}
+	
+	/**
+	 * Method places the players ship(s) on the board.
+	 */
+	public void placePlayerShips(Player competitor, String shipOneCoordinates, int shipType)
 	{
 		yCharCoordinate = shipOneCoordinates.charAt(0); //parse at index[0] to get the char part
 		xIntCoordinate = Character.getNumericValue(shipOneCoordinates.charAt(1)); //parse at index[1] to get int part
 		
-		//convert yCharCoordinate into it's corresponding int value
-		char[] yCharArray = new char[]{'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'};
+		char[] yCharArray = new char[]{'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'}; //convert yCharCoordinate to corresponding int value
 		int counter = 0;
-		yIntCoordinate = 0; // re-initialize variable
+		yIntCoordinate = 0; //re-initialize variable
 		do
 		{
 			if(yCharCoordinate == yCharArray[counter])
@@ -72,7 +95,7 @@ public class GameBoard
 			}
 		}while(yIntCoordinate != counter);
 		
-		if(objectArray[yIntCoordinate][xIntCoordinate].getIsOccupied() == false)
+		if(objectArray[yIntCoordinate][xIntCoordinate].getIsOccupied() == false) //check if ship already exists on coordinate
 		{
 			objectArray[yIntCoordinate][xIntCoordinate].setIsOccupied();
 			System.out.println("You have successfully placed your 1x1 destroyer on " + shipOneCoordinates);
@@ -88,11 +111,11 @@ public class GameBoard
 	 * Method plots the game board to the screen for the player or computer
 	 * @param Competitor
 	 */
-	public void plotBoardToScreen(Player Competitor)
+	public void plotBoardToScreen(String competitor)
 	{
 		int counter = 0;
-		System.out.println("BattleShip Board for: " + Competitor.getPlayer());
-		System.out.println("===========================");
+		System.out.println(competitor + "'s BattleShip Board");
+		System.out.println("========================");
 		
 		for(yIntCoordinate = 0; yIntCoordinate < 8; ++yIntCoordinate) //Y coordinate
 		{

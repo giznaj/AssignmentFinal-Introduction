@@ -8,9 +8,9 @@
 	public class Ship
 	{
 		/**
-		 * String that represents the ship type (i.e. submarine)
+		 * number (int) that represents the ship type (i.e. 0 for destroyer, 1 for submarine)
 		 */
-		private String shipType;
+		private int shipType;
 		
 		/**
 		 * number (int) that represents how many coordinates the ship occupies on the board
@@ -20,33 +20,32 @@
 		/**
 		 * Boolean value for the ship's 'Sunk' status. (if the ship is sunk, isSunk = true)
 		 */
-		private boolean isSunk = false;
+		private boolean isSunk;
 		
 		/**
 		 * Boolean value for the ship's 'Hit' status.  (if the ship is hit, isHit = true)
 		 */
-		private boolean isHit = false;
-		
-	    /**
-	     * Default constructor for the Card class
-	     */
-		public Ship()
-		{
-			shipType = "patrol boat";
-			shipLength = 1;
-		}
+		private boolean isHit;
 		
 		/**
 		 * Overloaded constructor for the ship class
 		 * @param shipType
-		 * @param shipLength
 		 */
-		public void Card(String shipType, int shipLength)
+		public Ship(int shipType)
 		{	
 			this.shipType = shipType;
-			this.shipLength = shipLength;
+			isHit = false;
+			isSunk = false;
+			
+			if(shipType == 0)
+			{
+				this.shipLength = 1;
+			}
+			else 
+			{
+				this.shipLength = 2;
+			}
 		}
-		
 		
 		/**
 		 * Sets the 'isHit' boolean expression to 'true' upon the first hit of the ship
@@ -64,12 +63,11 @@
 			isHit = true;
 		}
 		
-		
 		/**
 		 * Method returns the ship's type (shipType) the invoking method
 		 * @return
 		 */
-		public String getShipType()
+		public int getShipType()
 		{
 			return shipType;
 		}
