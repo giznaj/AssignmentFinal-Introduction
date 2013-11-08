@@ -1,4 +1,3 @@
-import java.util.Random;
 import java.util.Scanner;
 
 /** Description of BattleShip.java
@@ -17,11 +16,16 @@ public class BattleShip
 	private GameBoard PlayerOneBoard; //user game board
 	private GameBoard PlayerTwoBoard; //computer game board
 	
+	private Player PlayerOne;
+	private Player PlayerTwo;
+	
+	private Ship PlayOneDestroy;
+	private Ship PlayTwoDestroy;
+	
 	/**
-	 * Player and computer competitors of the 'Player' object
+	 * holds the competitors name who is playing the computer
 	 */
-	private Player PlayerOne; //user competitor
-	private Player PlayerTwo; //computer competitor
+	String playerOneName;
 	
 	/**
 	 * @param args not used
@@ -37,34 +41,36 @@ public class BattleShip
 	 */
 	public void playBattleShip()
 	{	
-		/**
-		 * holds the competitors name who is playing the computer
-		 */
-		String playerOneName;
 		final String playerTwoName = "HAL";
 		
-		Scanner kb = new Scanner(System.in);
+		Scanner userInput = new Scanner(System.in);
 		System.out.println("Your name please?");
-		playerOneName = kb.next();
+		playerOneName = userInput.next();
 		System.out.println("Good luck " + playerOneName + "!  You will need it!");
 		System.out.println("Your Battleship board (size = 8x8 : y-axis = 'A-F' : x-axis = '0-7')");
 		System.out.println();
 		
-		//constructors - creates a game board for both playerOne and playerTwo
-		PlayerOneBoard = new GameBoard(playerOneName); //players game board
-		PlayerTwoBoard = new GameBoard(playerTwoName); //computers game board
+		//constructors - creates a game board for both PlayerOne and PlayerTwo
+		PlayerOneBoard = new GameBoard(PlayOneDestroy, PlayerOne, playerOneName); //players game board
+		//PlayerTwoBoard = new GameBoard(PlayTwoDestroy, PlayerTwo, playerTwoName); //computers game board
 		
-		// displays the player and computer game board.  This is so the user can see where to place his/her ship(s).
+		//displays the player and computer game board.  This is so the user can see where to place his/her ship(s).
 		PlayerOneBoard.plotBoardToScreen(playerOneName);
 		PlayerTwoBoard.plotBoardToScreen(playerTwoName);
 		
-		// sends the first ships coordinates.  Method passes the coordinates and the game board both as parameters.
-		// 1st ship is a 1x1 for both the player and the computer
+		//sends the first ships coordinates.  Method passes the coordinates and the game board both as parameters.
+		//1st ship is a 1x1 for both the player and the computer
 		String shipOneCoordinates;
 		System.out.println("Let's place your 1x1 destroyer on your board.  Please select the coordinates (i.e. C4)");
-		shipOneCoordinates = kb.next().toUpperCase();
+		shipOneCoordinates = userInput.next().toUpperCase();
 		int shipType = 0;
-		PlayerOneBoard.placePlayerShips(PlayerOne, shipOneCoordinates, shipType);
+		PlayerOneBoard.placePlayerShips(shipOneCoordinates, shipType);
 		PlayerTwoBoard.placeComputerShips();
+		
+		String targetCoordinates;
+		System.out.println(playerOneName + " fire away and select a coordinate to shoot? (i.e. F2)");
+		targetCoordinates = userInput.next();
+		
+		PlayerTwoBoard.attackShip(targetCoordinates);
 	}
 }

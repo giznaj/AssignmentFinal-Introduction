@@ -15,17 +15,10 @@ public class GameBoard
 	private Coordinates[][] objectArray;	
 	
 	/**
-	 * Player and Computer 'Ship' objects
-	 */
-	private Ship PlayerDestroyerShip;
-	private Ship ComputerDestroyerShip;
-	private Ship PlayerSubShip;
-	private Ship ComputerSubShip;
-	
-	/**
 	 * competitor who owns this.GameBoard
 	 */
 	private String competitor;
+	
 	
 	/**
 	 * X and Y coordinates that make up the String pair (i.e. B4).  Need this variables for when the user inputs
@@ -37,16 +30,14 @@ public class GameBoard
 	private char yCharCoordinate;
 	private int yIntCoordinate;
 	
-	//constructors : 2 competitors in the game of battleship (player and computer)
-	Player UserPlayer = new Player(competitor);
-	Player ComputerPlayer = new Player(competitor);
-	
 	/**
 	 * Builds the game board
 	 */
-	public GameBoard(String competitor)
+	public GameBoard(Ship DestroyerShip, Player Competitor, String playerName)
 	{
-		this.competitor = competitor; //holds the value of the competitors name for this.GameBoard
+		DestroyerShip = new Ship(0);
+		Competitor = new Player(playerName);
+		
 		objectArray = new Coordinates[8][8];
 		for(yIntCoordinate = 0; yIntCoordinate < 8; ++yIntCoordinate) //Y coordinate
 		{
@@ -58,24 +49,10 @@ public class GameBoard
 	}
 	
 	/**
-	 * Method sets the computers 1x1 ship on the computer's game board.  Doesn't check if coordinate is already occupied
-	 */
-	public void placeComputerShips()
-	{
-		final Random randomGenNumber = new Random();
-		int yIntCoordinate;
-		int xIntCoordinate;
-		yIntCoordinate = randomGenNumber.nextInt(7);
-		xIntCoordinate = randomGenNumber.nextInt(7);
-		System.out.println(yIntCoordinate + "" + xIntCoordinate);
-		objectArray[yIntCoordinate][xIntCoordinate].setIsOccupied();
-	}
-	
-	/**
 	 * Method places the players ship(s) on the board.
 	 */
-	public void placePlayerShips(Player competitor, String shipOneCoordinates, int shipType)
-	{
+	public void placePlayerShips(String shipOneCoordinates, int shipType)
+	{	
 		yCharCoordinate = shipOneCoordinates.charAt(0); //parse at index[0] to get the char part
 		xIntCoordinate = Character.getNumericValue(shipOneCoordinates.charAt(1)); //parse at index[1] to get int part
 		
@@ -105,6 +82,56 @@ public class GameBoard
 		{
 			System.out.println("Coordinates " + shipOneCoordinates + " have already been selected");
 		}
+	}
+	
+	/**
+	 * Method sets the computers 1x1 ship on the computer's game board.  Doesn't check if coordinate is already occupied
+	 */
+	public void placeComputerShips()
+	{
+		final Random randomGenNumber = new Random();
+		int yIntCoordinate;
+		int xIntCoordinate;
+		yIntCoordinate = randomGenNumber.nextInt(7);
+		xIntCoordinate = randomGenNumber.nextInt(7);
+		objectArray[yIntCoordinate][xIntCoordinate].setIsOccupied();
+		System.out.println(competitor + " has placed his 1x1 destroyer on his game board.");
+	}
+	
+	/**
+	 * Method that checks the corresponding coordinate object against the coordinates provided by player
+	 * @param shipOneCoordinates
+	 * @return
+	 */
+	public boolean attackShip(String shipOneCoordinates)
+	{
+		boolean attackStatus = false;
+		yCharCoordinate = shipOneCoordinates.charAt(0); //parse at index[0] to get the char part
+		xIntCoordinate = Character.getNumericValue(shipOneCoordinates.charAt(1)); //parse at index[1] to get int part
+		
+		char[] yCharArray = new char[]{'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'}; //convert yCharCoordinate to corresponding int value
+		int counter = 0;
+		yIntCoordinate = 0; //re-initialize variable
+		do
+		{
+			if(yCharCoordinate == yCharArray[counter])
+			{
+				yIntCoordinate = counter;
+			}
+			
+			else
+			{
+				counter++;
+			}
+		}while(yIntCoordinate != counter);
+		
+		if(objectArray[yIntCoordinate][yIntCoordinate].getIsOccupied() == true)
+		{
+			attackStatus = true;
+			System.out.println("You hit the computer");
+		}
+		
+		return attackStatus;
 	}
 	
 	/**

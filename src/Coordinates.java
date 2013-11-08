@@ -45,6 +45,7 @@
 				this.yIntCoordinate = yIntCoordinate;
 				this.xIntCoordinate = xIntCoordinate;
 				coordinatePair = yCharCoordinate + "" + xIntCoordinate;
+				isOccupied = false; //maybe not needed. -- needs testing
 			}
 			
 			else
