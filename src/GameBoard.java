@@ -19,6 +19,10 @@ public class GameBoard
 	 */
 	private String competitor;
 	
+	/**
+	 * boolean value becomes true if the player successfully hits the ship
+	 */
+	boolean attackStatus = false;
 	
 	/**
 	 * X and Y coordinates that make up the String pair (i.e. B4).  Need this variables for when the user inputs
@@ -37,6 +41,7 @@ public class GameBoard
 	{
 		DestroyerShip = new Ship(0);
 		Competitor = new Player(playerName);
+		this.competitor = playerName;
 		
 		objectArray = new Coordinates[8][8];
 		for(yIntCoordinate = 0; yIntCoordinate < 8; ++yIntCoordinate) //Y coordinate
@@ -96,16 +101,18 @@ public class GameBoard
 		xIntCoordinate = randomGenNumber.nextInt(7);
 		objectArray[yIntCoordinate][xIntCoordinate].setIsOccupied();
 		System.out.println(competitor + " has placed his 1x1 destroyer on his game board.");
+		
+		//turn on for testing or marking purposes
+		System.out.println("Answer is " + yIntCoordinate + "" + xIntCoordinate + " or " + objectArray[yIntCoordinate][xIntCoordinate].getCoordinatePair());
 	}
 	
 	/**
-	 * Method that checks the corresponding coordinate object against the coordinates provided by player
+	 * Method checks the corresponding Coordinates object against the coordinates provided by player
 	 * @param shipOneCoordinates
 	 * @return
 	 */
 	public boolean attackShip(String shipOneCoordinates)
 	{
-		boolean attackStatus = false;
 		yCharCoordinate = shipOneCoordinates.charAt(0); //parse at index[0] to get the char part
 		xIntCoordinate = Character.getNumericValue(shipOneCoordinates.charAt(1)); //parse at index[1] to get int part
 		
@@ -125,10 +132,17 @@ public class GameBoard
 			}
 		}while(yIntCoordinate != counter);
 		
-		if(objectArray[yIntCoordinate][yIntCoordinate].getIsOccupied() == true)
+		if(objectArray[yIntCoordinate][yIntCoordinate].getIsOccupied())
 		{
 			attackStatus = true;
-			System.out.println("You hit the computer");
+			System.out.println("You hit the ship!");
+			objectArray[yIntCoordinate][xIntCoordinate].setIsHit();
+		}
+		
+		else
+		{
+			System.out.println("You missed");
+			attackStatus = true;
 		}
 		
 		return attackStatus;
@@ -148,7 +162,8 @@ public class GameBoard
 		{
 			for(xIntCoordinate = 0; xIntCoordinate < 8; ++xIntCoordinate) //X coordinate
 			{
-				System.out.printf("%s ", objectArray[yIntCoordinate][xIntCoordinate].getCoordinatePair());
+				//System.out.printf("%s ", objectArray[yIntCoordinate][xIntCoordinate].getCoordinatePair());
+				System.out.printf("%s ", objectArray[yIntCoordinate][xIntCoordinate].getDisplayStatus());
 				//System.out.printf(String.format("%d%d ", yIntCoordinate, xIntCoordinate));
 				counter++;
     	

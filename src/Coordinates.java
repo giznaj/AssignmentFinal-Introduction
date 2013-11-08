@@ -27,9 +27,29 @@
 		private String coordinatePair;
 		
 		/**
+		 * Value holds the displaStatus string that is displayed for each of the coordinates
+		 */
+		private String displayStatus;
+		
+		/**
 		 * Boolean value for this coordinates 'occupied status.  (if the ship is on the coordinate, isOccupied = true)
 		 */
 		private boolean isOccupied = false;
+		
+		/**
+		 * Boolean value that represents if the coordinate has been shot at.
+		 */
+		private boolean isAttacked = false;
+		
+		/**
+		 * Boolean value that represents if the ship has been hit or not
+		 */
+		private boolean isHit = false;
+		
+		/**
+		 * Boolean value that represents if the ship has been sunk or not
+		 */
+		private boolean isSunk = false;
 		
 		/**
 		 * Overloaded constructor for the Coordinate class.  Builds the Object for the Array in GameBoard.java
@@ -46,6 +66,7 @@
 				this.xIntCoordinate = xIntCoordinate;
 				coordinatePair = yCharCoordinate + "" + xIntCoordinate;
 				isOccupied = false; //maybe not needed. -- needs testing
+				setDisplayStatus();
 			}
 			
 			else
@@ -63,6 +84,53 @@
 		public void setIsOccupied()
 		{
 			isOccupied = true;
+		}
+		
+		/**
+		 * Sets the isHit boolean value to true if the ship is successfully hit
+		 */
+		public void setIsHit()
+		{
+			isHit = true;	
+		}
+		
+		/**
+		 * Sets the isSunk boolean value to true if the ship goes under water after it's last hit
+		 */
+		public void setIsSunk()
+		{
+			isSunk = true;
+		}
+		
+		/**
+		 * Method responsible for showing the 2 digit 'char' values on the each game board
+		 */
+		public void setDisplayStatus()
+		{
+			if(!isOccupied)
+			{
+				displayStatus = getCoordinatePair();
+			}
+			
+			else if(isHit)
+			{
+				displayStatus = "$$";
+			}
+			
+			else if(!isHit)
+			{
+				displayStatus = "??";
+			}
+			
+			else if(isSunk)
+			{
+				displayStatus = "XX";
+			}
+			
+			else
+			{
+				//do nothing for now
+			}
 		}
 		
 		/**
@@ -109,5 +177,14 @@
 		public boolean getIsOccupied()
 		{
 			return isOccupied;
-		}		
+		}	
+		
+		/**
+		 * Returns the string pair (2 digits) for display on each of the game boards
+		 * @return
+		 */
+		public String getDisplayStatus()
+		{
+			return displayStatus;
+		}
 	}
