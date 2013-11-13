@@ -78,12 +78,20 @@
 		}
 		
 		/**
-		 * Sets the boolean value IsOccupied to true. (if ship occupies coordinates, 'isOccupied' becomes true).  When this 
-		 * flag is true, another ship cannot occupy this coordinate.
+		 * Sets the boolean value IsOccupied to true. (if ship occupies coordinates, 'isOccupied' becomes true) 
+		 * If flag is true, another ship cannot occupy this coordinate.
 		 */
 		public void setIsOccupied()
 		{
 			isOccupied = true;
+		}
+		
+		/**
+		 * Sets the boolean value IsAttacked to true. (if coordinate has been shot at, 'isAttacked' becomes true)
+		 */
+		public void setIsAttacked()
+		{
+			isAttacked = true;
 		}
 		
 		/**
@@ -112,19 +120,20 @@
 				displayStatus = getCoordinatePair();
 			}
 			
-			else if(isHit)
+			else if(isOccupied)
 			{
-				displayStatus = "$$";
+				displayStatus = "##";
 			}
 			
-			else if(!isHit)
-			{
-				displayStatus = "??";
-			}
-			
-			else if(isSunk)
+			else if(isAttacked && !isOccupied)
 			{
 				displayStatus = "XX";
+			}
+			
+			else if(isAttacked && isOccupied)
+			{
+				displayStatus = "XX";
+				isHit = true;
 			}
 			
 			else
