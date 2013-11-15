@@ -82,6 +82,7 @@
 		{
 			if(isAttacked && isOccupied)
 			{
+				isHit = true;
 				displayStatus = "$$";
 			}
 			
@@ -90,13 +91,7 @@
 				displayStatus = "XX";
 			}
 			
-			else if(isOccupied)
-			{
-				displayStatus = "##";
-				isOccupied = true;
-			}
-			
-			else if(!isOccupied)
+			else if(!isAttacked)
 			{
 				displayStatus = getCoordinatePair();
 			}

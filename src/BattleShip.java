@@ -49,7 +49,7 @@ public class BattleShip
 		
 		//placing the player's 1x1 destroyer ship on the board
 		String shipOneCoordinates;
-		System.out.println("Let's place your 1x1 destroyer on your board.  Please select the coordinates (i.e. C4)");
+		System.out.println("Let's place your 1x1 destroyer on your board.  Please select a coordinate pair (i.e. C4)");
 		shipOneCoordinates = userInput.next().toUpperCase();
 		int shipType = 0;
 		NewGameBoard.placePlayerShips(shipOneCoordinates, shipType);
@@ -57,11 +57,12 @@ public class BattleShip
 		do
 		{
 			String targetCoordinates;
-			System.out.println(playerOneName + " fire away and select a coordinate to shoot? (i.e. F2)");
+			System.out.println(playerOneName + ", fire away and select a coordinate pair to shoot (i.e. F2)");
 			targetCoordinates = userInput.next().toUpperCase();
 			NewGameBoard.attackComputer(targetCoordinates);
+			NewGameBoard.attackPlayer();
 			NewGameBoard.plotBoardToScreen(playerOneName, playerTwoName);
 			
-		}while(NewGameBoard.computerAttackedStatus == false);
+		}while(NewGameBoard.computerAttackedStatus == false && NewGameBoard.playerOneAttackedStatus == false);
 	}
 }
