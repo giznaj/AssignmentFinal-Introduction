@@ -48,7 +48,8 @@
 		 */
 		public void setIsOccupied()
 		{
-			this.isOccupied = true;
+			isOccupied = true;
+			setDisplayStatus();
 		}
 		
 		/**
@@ -57,6 +58,7 @@
 		public void setIsAttacked()
 		{
 			isAttacked = true;
+			setDisplayStatus();
 		}
 		
 		/**
@@ -64,7 +66,8 @@
 		 */
 		public void setIsHit()
 		{
-			isHit = true;	
+			isHit = true;
+			setDisplayStatus();
 		}
 		
 		/**
@@ -73,25 +76,30 @@
 		public void setIsSunk()
 		{
 			isSunk = true;
+			setDisplayStatus();
 		}
 		
 		/**
 		 * Method responsible for setting the 2 digit 'char' values on the each game board
 		 */
-		public String setDisplayStatus()
+		public void setDisplayStatus()
 		{
-			if(isAttacked && isOccupied)
+			if(isHit)
 			{
-				isHit = true;
 				displayStatus = "$$";
 			}
 			
-			else if(isAttacked && !isOccupied)
+			else if(isAttacked)
 			{
 				displayStatus = "XX";
 			}
 			
-			else if(!isAttacked)
+			else if(isOccupied)
+			{
+				displayStatus = "@@";
+			}
+			
+			else if(!isOccupied)
 			{
 				displayStatus = getCoordinatePair();
 			}
@@ -100,8 +108,6 @@
 			{
 				System.out.println("That is not a proper displayStatus " + displayStatus);
 			}
-			
-			return displayStatus;
 		}
 		
 		/**
@@ -148,6 +154,15 @@
 		public boolean getIsOccupied()
 		{
 			return isOccupied;
+		}
+		
+		/**
+		 * Returns the boolean value assigned to isHit field
+		 * @return
+		 */
+		public boolean getIsHit()
+		{
+			return isHit;
 		}
 		
 		/**

@@ -63,6 +63,6 @@ public class BattleShip
 			NewGameBoard.attackPlayer();
 			NewGameBoard.plotBoardToScreen(playerOneName, playerTwoName);
 			
-		}while(NewGameBoard.computerAttackedStatus == false && NewGameBoard.playerOneAttackedStatus == false);
+		}while(!NewGameBoard.getGameStatus());
 	}
 }

@@ -16,15 +16,11 @@ public class GameBoard
 	private Coordinates[][] computerObjectArray;
 	
 	/**
-	 * competitor who owns this.GameBoard
-	 */
-	private String competitor;
-	
-	/**
 	 * boolean value becomes true if the respective player has been successfully hit
 	 */
-	boolean playerOneAttackedStatus = false;
-	boolean computerAttackedStatus = false;
+	private boolean playerAttackedStatus = false;
+	private boolean computerAttackedStatus = false;
+	private boolean gameOverStatus = false;
 	
 	/**
 	 * X and Y coordinates that make up the String pair (i.e. B4).  Need this variables for when the user inputs
@@ -112,11 +108,7 @@ public class GameBoard
 		yIntCoordinate = randomGenNumber.nextInt(7);
 		xIntCoordinate = randomGenNumber.nextInt(7);
 		computerObjectArray[yIntCoordinate][xIntCoordinate].setIsOccupied();
-		computerObjectArray[yIntCoordinate][xIntCoordinate].setDisplayStatus();
 		System.out.println(competitor + " has placed his 1x1 destroyer on his game board.");
-		
-		//turn on for testing or marking purposes
-		System.out.println(computerObjectArray[yIntCoordinate][xIntCoordinate].getCoordinatePair());
 	}
 	
 	/**
@@ -124,7 +116,7 @@ public class GameBoard
 	 * @param shipOneCoordinates
 	 * @return
 	 */
-	public boolean attackComputer(String targetCoordinates)
+	public void attackComputer(String targetCoordinates)
 	{
 		yCharCoordinate = targetCoordinates.charAt(0); //parse at index[0] to get the char part
 		xIntCoordinate = Character.getNumericValue(targetCoordinates.charAt(1)); //parse at index[1] to get int part
@@ -146,29 +138,27 @@ public class GameBoard
 			}
 		}while(yIntCoordinate != counter);
 		
-		if(computerObjectArray[yIntCoordinate][yIntCoordinate].getIsOccupied())
+		if(computerObjectArray[yIntCoordinate][xIntCoordinate].getIsOccupied())
 		{
 			computerObjectArray[yIntCoordinate][xIntCoordinate].setIsHit();
-			computerObjectArray[yIntCoordinate][xIntCoordinate].setDisplayStatus();
 			computerAttackedStatus = true;
-			System.out.println("You hit the computer's ship!");
+			System.out.println("You hit the computer's ship! (" + computerObjectArray[yIntCoordinate][xIntCoordinate].getCoordinatePair() +")");
 		}
 		
 		else
 		{
 			computerObjectArray[yIntCoordinate][xIntCoordinate].setIsAttacked();
-			computerObjectArray[yIntCoordinate][xIntCoordinate].setDisplayStatus();
 			computerAttackedStatus = false;
-			System.out.println("You missed the computer's ship");
+			System.out.println("You missed the computer's ship! (" + computerObjectArray[yIntCoordinate][xIntCoordinate].getCoordinatePair() +")");
 		}
 		
-		return computerAttackedStatus;
+		setGameStatus();
 	}
 	
 	/**
 	 * Method attacks the player by choosing a random coordinate in the player's Array
 	 */
-	public boolean attackPlayer()
+	public void attackPlayer()
 	{
 		final Random randomGenNumber = new Random();
 		int yIntCoordinate;
@@ -179,20 +169,18 @@ public class GameBoard
 		if(playerObjectArray[yIntCoordinate][yIntCoordinate].getIsOccupied())
 		{
 			playerObjectArray[yIntCoordinate][xIntCoordinate].setIsHit();
-			playerObjectArray[yIntCoordinate][xIntCoordinate].setDisplayStatus();
-			playerOneAttackedStatus = true;
-			System.out.println("Computer has hit your ship!");
+			playerAttackedStatus = true;
+			System.out.println("Computer has hit your ship! (" + playerObjectArray[yIntCoordinate][xIntCoordinate].getCoordinatePair() +")");
 		}
 		
 		else
 		{
 			playerObjectArray[yIntCoordinate][xIntCoordinate].setIsAttacked();
-			playerObjectArray[yIntCoordinate][xIntCoordinate].setDisplayStatus();
-			playerOneAttackedStatus = false;
-			System.out.println("Computer missed your ship");
-		}
+			playerAttackedStatus = false;
+			System.out.println("Computer missed your ship! (" + playerObjectArray[yIntCoordinate][xIntCoordinate].getCoordinatePair() +")");
+		}	
 		
-		return playerOneAttackedStatus;	
+		setGameStatus();
 	}
 	
 	/**
@@ -242,5 +230,30 @@ public class GameBoard
 		}
 		
 		System.out.println();
+	}
+	
+	/**
+	 * Method sets the gameOverStatus value to true as soon as a ship has been hit
+	 */
+	public void setGameStatus()
+	{
+		if(computerAttackedStatus || playerAttackedStatus)
+		{
+			gameOverStatus = true;
+		}
+		
+		else
+		{
+			gameOverStatus = false;
+		}
+	}
+	
+	/**
+	 * Method returns the boolean value for the gameOverStatus field.  (if true, the game is over)
+	 * @return
+	 */
+	public boolean getGameStatus()
+	{	
+		return gameOverStatus;
 	}
 }
