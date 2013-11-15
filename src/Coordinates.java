@@ -6,49 +6,14 @@
  */
 	public class Coordinates
 	{
-		/**
-		 * X coordinate part (int format) of a x,y coordinate combination (i.e.  0,1,2,3...)
-		 */
 		private int xIntCoordinate;
-		
-		/**
-		 * Y coordinate part (int format) of a x,y coordinate combination (i.e. A,B,C,D...)
-		 */
 		private int yIntCoordinate;
-		
-		/**
-		 * Y coordinate part (char format) of a x.y coordinate combination (i.e.  0,1,2,3...)
-		 */
 		private char yCharCoordinate;
-		
-		/**
-		 * String of the concatenation of the 'char' and the 'int' values (i.e. 'A' + 4 = "A4")
-		 */
 		private String coordinatePair;
-		
-		/**
-		 * Value holds the displaStatus string that is displayed for each of the coordinates
-		 */
 		private String displayStatus;
-		
-		/**
-		 * Boolean value for this coordinates 'occupied status.  (if the ship is on the coordinate, isOccupied = true)
-		 */
 		private boolean isOccupied = false;
-		
-		/**
-		 * Boolean value that represents if the coordinate has been shot at.
-		 */
 		private boolean isAttacked = false;
-		
-		/**
-		 * Boolean value that represents if the ship has been hit or not
-		 */
 		private boolean isHit = false;
-		
-		/**
-		 * Boolean value that represents if the ship has been sunk or not
-		 */
 		private boolean isSunk = false;
 		
 		/**
@@ -83,7 +48,7 @@
 		 */
 		public void setIsOccupied()
 		{
-			isOccupied = true;
+			this.isOccupied = true;
 		}
 		
 		/**
@@ -111,18 +76,13 @@
 		}
 		
 		/**
-		 * Method responsible for showing the 2 digit 'char' values on the each game board
+		 * Method responsible for setting the 2 digit 'char' values on the each game board
 		 */
-		public void setDisplayStatus()
+		public String setDisplayStatus()
 		{
-			if(!isOccupied)
+			if(isAttacked && isOccupied)
 			{
-				displayStatus = getCoordinatePair();
-			}
-			
-			else if(isOccupied)
-			{
-				displayStatus = "##";
+				displayStatus = "$$";
 			}
 			
 			else if(isAttacked && !isOccupied)
@@ -130,16 +90,23 @@
 				displayStatus = "XX";
 			}
 			
-			else if(isAttacked && isOccupied)
+			else if(isOccupied)
 			{
-				displayStatus = "XX";
-				isHit = true;
+				displayStatus = "##";
+				isOccupied = true;
+			}
+			
+			else if(!isOccupied)
+			{
+				displayStatus = getCoordinatePair();
 			}
 			
 			else
 			{
-				//do nothing for now
+				System.out.println("That is not a proper displayStatus " + displayStatus);
 			}
+			
+			return displayStatus;
 		}
 		
 		/**
@@ -180,13 +147,13 @@
 		}
 		
 		/**
-		 * Method returns the Boolean value for t
+		 * Returns the boolean value assigned to isOccupied field
 		 * @return
 		 */
 		public boolean getIsOccupied()
 		{
 			return isOccupied;
-		}	
+		}
 		
 		/**
 		 * Returns the string pair (2 digits) for display on each of the game boards
@@ -196,4 +163,5 @@
 		{
 			return displayStatus;
 		}
+		
 	}

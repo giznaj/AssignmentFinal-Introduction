@@ -41,6 +41,8 @@ public class GameBoard
 	 */
 	public GameBoard()
 	{
+		xIntCoordinate = 0;
+		yIntCoordinate = 0;
 		playerObjectArray = new Coordinates[8][8];
 		for(yIntCoordinate = 0; yIntCoordinate < 8; ++yIntCoordinate) //Y coordinate
 		{
@@ -50,6 +52,8 @@ public class GameBoard
 			}
 		}
 		
+		xIntCoordinate = 0;
+		yIntCoordinate = 0;
 		computerObjectArray = new Coordinates[8][8];
 		for(yIntCoordinate = 0; yIntCoordinate < 8; ++yIntCoordinate) //Y coordinate
 		{
@@ -112,7 +116,8 @@ public class GameBoard
 		System.out.println(competitor + " has placed his 1x1 destroyer on his game board.");
 		
 		//turn on for testing or marking purposes
-		System.out.println("FOR TESTING: " + competitor + "'s Coordinates are " + computerObjectArray[yIntCoordinate][xIntCoordinate].getCoordinatePair());
+		System.out.println(computerObjectArray[yIntCoordinate][xIntCoordinate].getCoordinatePair());
+		System.out.println(computerObjectArray[yIntCoordinate][xIntCoordinate].getDisplayStatus());
 	}
 	
 	/**
@@ -120,10 +125,10 @@ public class GameBoard
 	 * @param shipOneCoordinates
 	 * @return
 	 */
-	public boolean attackComputer(String shipOneCoordinates)
+	public boolean attackComputer(String targetCoordinates)
 	{
-		yCharCoordinate = shipOneCoordinates.charAt(0); //parse at index[0] to get the char part
-		xIntCoordinate = Character.getNumericValue(shipOneCoordinates.charAt(1)); //parse at index[1] to get int part
+		yCharCoordinate = targetCoordinates.charAt(0); //parse at index[0] to get the char part
+		xIntCoordinate = Character.getNumericValue(targetCoordinates.charAt(1)); //parse at index[1] to get int part
 		
 		char[] yCharArray = new char[]{'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'}; //convert yCharCoordinate to corresponding int value
 		int counter = 0;
@@ -143,7 +148,7 @@ public class GameBoard
 		
 		if(computerObjectArray[yIntCoordinate][yIntCoordinate].getIsOccupied())
 		{
-			computerObjectArray[yIntCoordinate][xIntCoordinate].setIsAttacked();
+			computerObjectArray[yIntCoordinate][xIntCoordinate].setIsHit();
 			computerObjectArray[yIntCoordinate][xIntCoordinate].setDisplayStatus();
 			computerAttackedStatus = true;
 			System.out.println("You hit the computer's ship!");
@@ -151,8 +156,10 @@ public class GameBoard
 		
 		else
 		{
-			System.out.println("You missed the computer's ship");
+			computerObjectArray[yIntCoordinate][xIntCoordinate].setIsAttacked();
+			computerObjectArray[yIntCoordinate][xIntCoordinate].setDisplayStatus();
 			computerAttackedStatus = false;
+			System.out.println("You missed the computer's ship");
 		}
 		
 		return computerAttackedStatus;

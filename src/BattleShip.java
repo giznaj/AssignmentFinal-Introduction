@@ -40,15 +40,14 @@ public class BattleShip
 		System.out.println("Battleship boards (size = 8x8 : y-axis = 'A-F' : x-axis = '0-7')");
 		System.out.println();
 		
-		//constructors - creates a game board for both PlayerOne and PlayerTwo
-		NewGameBoard = new GameBoard(); //players game board
-		//displays the player and computer game board.  This is so the user can see where to place his/her ship(s).
+		//constructors - creates a game board for both PlayerOne and the Computer
+		NewGameBoard = new GameBoard();
+		//displays the player and computer game board.
 		NewGameBoard.plotBoardToScreen(playerOneName, playerTwoName);
-		
-		//placing the 1x1 destroyers on computer game board
+		//placing the computer's 1x1 destroyer ship on the board
 		NewGameBoard.placeComputerShips(playerTwoName);
 		
-		//placing the 1x1 destroyer on the player one game board
+		//placing the player's 1x1 destroyer ship on the board
 		String shipOneCoordinates;
 		System.out.println("Let's place your 1x1 destroyer on your board.  Please select the coordinates (i.e. C4)");
 		shipOneCoordinates = userInput.next().toUpperCase();
