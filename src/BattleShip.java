@@ -38,22 +38,30 @@ public class BattleShip
 		playerOneName = userInput.next();
 		System.out.println("Good luck " + playerOneName + "!  You will need it!");
 		System.out.println("Battleship boards (size = 8x8 : y-axis = 'A-F' : x-axis = '0-7')");
+		System.out.println("Legend: 'A3' = FREE; '@@' = OCCUPIED; 'XX' = MISS; '$$' = HIT");
 		System.out.println();
 		
 		//constructors - creates a game board for both PlayerOne and the Computer
 		NewGameBoard = new GameBoard();
+		
 		//displays the player and computer game board.
 		NewGameBoard.plotBoardToScreen(playerOneName, playerTwoName);
-		//placing the computer's 1x1 destroyer ship on the board
-		NewGameBoard.placeComputerShips(playerTwoName);
 		
-		//placing the player's 1x1 destroyer ship on the board
+		//placing the computer's 1x1 destroyer ship on the board
+		NewGameBoard.placeComputerShips(playerTwoName); //ship #1
+		NewGameBoard.placeComputerShips(playerTwoName); //ship #2
+		
+		//placing the player's 1x1 destroyer ships on the board
 		String shipOneCoordinates;
-		System.out.println("Let's place your 1x1 destroyer on your board.  Please select a coordinate pair (i.e. C4)");
+		System.out.println("Let's place your 1st 1x1 destroyer on your board.  Please select a coordinate pair (i.e. C4)");
 		shipOneCoordinates = userInput.next().toUpperCase();
 		int shipType = 0;
 		NewGameBoard.placePlayerShips(shipOneCoordinates, shipType);
+		System.out.println("Let's place your 2nd 1x1 destroyer on your board.  Please select a coordinate pair (i.e. C4)");
+		shipOneCoordinates = userInput.next().toUpperCase();
+		NewGameBoard.placePlayerShips(shipOneCoordinates, shipType);
 		
+		//the guessing begins here (battle).  The battle continues until a player sinks 2 of the opponents ships
 		do
 		{
 			String targetCoordinates;
