@@ -1,4 +1,4 @@
-/** Description of Player.java
+/**Description of Player.java
  * Represents the either the 'Player' or the 'Computer' in the game of BattleShip 
  * Assignment #4
  *

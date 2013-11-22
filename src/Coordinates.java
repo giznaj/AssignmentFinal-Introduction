@@ -1,4 +1,4 @@
-/** Description of Coordinates.java
+/**Description of Coordinates.java
  * Represents Coordinates on a 10 x 10 BattleShip Gameboard
  * Assignment #4
  *
