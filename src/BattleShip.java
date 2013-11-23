@@ -31,9 +31,8 @@ public class BattleShip
 		Scanner userInput = new Scanner(System.in);
 		System.out.println("Your name please?");
 		playerOneName = userInput.next();
-		System.out.println("Good luck " + playerOneName + "!  You will need it!");
-		System.out.println("Battleship boards (Y and X axis are A-H and 0-7)");
-		System.out.println("Legend: A3 = FREE, @@ = OCCUPIED, XX = MISS, $$ = HIT");
+		System.out.println("Good luck " + playerOneName + "!  You'll be playing " + playerTwoName + ".");
+		System.out.println("Battleship boards (Y and X axis are A-H and 0-7 respectively)");
 		System.out.println("Enter Alpha before Numeric at all times (i.e. C4, not 4C)");
 		System.out.println();
 		

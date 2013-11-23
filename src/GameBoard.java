@@ -87,7 +87,7 @@ public class GameBoard
 		{
 			playerObjectArray[yIntCoordinate][xIntCoordinate].setIsOccupied();
 			shipsPlaced = shipsPlaced + 1;
-			System.out.println("You have successfully placed your " + shipsPlaced + " 1x1 destroyer on " + shipOneCoordinates);
+			System.out.println("You have successfully placed your #" + shipsPlaced + " 1x1 destroyer on " + shipOneCoordinates);
 			
 		}
 		
@@ -199,6 +199,7 @@ public class GameBoard
 	public void plotBoardToScreen(String player, String computer)
 	{
 		int counter = 0;
+		System.out.println("Legend: A3 = FREE, @@ = OCCUPIED, XX = MISS, $$ = HIT");
 		System.out.println(player + "'s BattleShip Board"); //player one 
 		System.out.println("========================");
 		
