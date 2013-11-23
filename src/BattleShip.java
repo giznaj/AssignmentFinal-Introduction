@@ -32,9 +32,9 @@ public class BattleShip
 		System.out.println("Your name please?");
 		playerOneName = userInput.next();
 		System.out.println("Good luck " + playerOneName + "!  You will need it!");
-		System.out.println("Battleship boards (size = 8x8 : y-axis = 'A-F' : x-axis = '0-7')");
+		System.out.println("Battleship boards (Y and X axis are A-H and 0-7)");
 		System.out.println("Legend: A3 = FREE, @@ = OCCUPIED, XX = MISS, $$ = HIT");
-		System.out.println("Enter Alpha before Numeric at all times (i.e. C4, not 4C");
+		System.out.println("Enter Alpha before Numeric at all times (i.e. C4, not 4C)");
 		System.out.println();
 		
 		//constructors - creates a game board - 2x 8x8 Array(64)
@@ -53,10 +53,10 @@ public class BattleShip
 		{
 			int shipType = 0;
 			String shipOneCoordinates;
-			System.out.println("Let's place your #" + (NewGameBoard.getPlacedShips() + 1) + " 1x1 destroyer on the board.  Please select a coordinate pair (i.e. C4)");
+			System.out.println("Let's place your #" + (NewGameBoard.getNumShipsPlaced() + 1) + " 1x1 destroyer on the board.  Please select a coordinate pair (i.e. C4)");
 			shipOneCoordinates = userInput.next().toUpperCase();
 			NewGameBoard.placePlayerShips(shipOneCoordinates, shipType); //ship #1
-		}while(NewGameBoard.getPlacedShips() < 2);
+		}while(NewGameBoard.getNumShipsPlaced() < 2);
 		
 		
 		do //the guessing begins here (battle).  The battle continues until a player sinks 2 of the opponents ships

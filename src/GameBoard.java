@@ -10,18 +10,14 @@ import java.util.Random;
 public class GameBoard 
 {	
 	/**
-	 * Array that holds the 64 coordinates of the BattleShip game board
+	 * Class variables
 	 */
 	private Coordinates[][] playerObjectArray;
 	private Coordinates[][] computerObjectArray;
 	private boolean isPlaced = false;
-	private int placedShips = 0;
-	
-	/**
-	 * boolean value becomes true if the respective player has been successfully hit
-	 */
-	private boolean playerAttackedStatus = false;
-	private boolean computerAttackedStatus = false;
+	private int shipsPlaced = 0;
+	private int computerShipsHit = 0;
+	private int playerShipsHit = 0;
 	private boolean gameOverStatus = false;
 	final Random randomGenNumber = new Random();
 	
@@ -90,9 +86,9 @@ public class GameBoard
 		if(!playerObjectArray[yIntCoordinate][xIntCoordinate].getIsOccupied()) //check if ship already exists on coordinate
 		{
 			playerObjectArray[yIntCoordinate][xIntCoordinate].setIsOccupied();
-			playerObjectArray[yIntCoordinate][xIntCoordinate].setDisplayStatus();
-			System.out.println("You have successfully placed your 1x1 destroyer on " + shipOneCoordinates);
-			placedShips = placedShips + 1;
+			shipsPlaced = shipsPlaced + 1;
+			System.out.println("You have successfully placed your " + shipsPlaced + " 1x1 destroyer on " + shipOneCoordinates);
+			
 		}
 		
 		else
@@ -157,14 +153,13 @@ public class GameBoard
 		if(computerObjectArray[yIntCoordinate][xIntCoordinate].getIsOccupied())
 		{
 			computerObjectArray[yIntCoordinate][xIntCoordinate].setIsHit();
-			computerAttackedStatus = true;
+			computerShipsHit = computerShipsHit + 1;
 			System.out.println("You hit the computer's ship! (" + computerObjectArray[yIntCoordinate][xIntCoordinate].getCoordinatePair() +")");
 		}
 		
 		else
 		{
 			computerObjectArray[yIntCoordinate][xIntCoordinate].setIsAttacked();
-			computerAttackedStatus = false;
 			System.out.println("You missed the computer's ship! (" + computerObjectArray[yIntCoordinate][xIntCoordinate].getCoordinatePair() +")");
 		}
 		
@@ -181,19 +176,16 @@ public class GameBoard
 		yIntCoordinate = randomGenNumber.nextInt(8);
 		xIntCoordinate = randomGenNumber.nextInt(8);
 	
-		System.out.println("before " + playerObjectArray[yIntCoordinate][yIntCoordinate].getIsOccupied());
-		if(playerObjectArray[yIntCoordinate][yIntCoordinate].getIsOccupied())
+		if(playerObjectArray[yIntCoordinate][xIntCoordinate].getIsOccupied())
 		{
 			playerObjectArray[yIntCoordinate][xIntCoordinate].setIsHit();
-			System.out.println("before " + playerObjectArray[yIntCoordinate][yIntCoordinate].getIsOccupied());
-			playerAttackedStatus = true;
+			playerShipsHit = playerShipsHit + 1;
 			System.out.println("Computer has hit your ship! (" + playerObjectArray[yIntCoordinate][xIntCoordinate].getCoordinatePair() +")");
 		}
 		
 		else
 		{
 			playerObjectArray[yIntCoordinate][xIntCoordinate].setIsAttacked();
-			playerAttackedStatus = false;
 			System.out.println("Computer missed your ship! (" + playerObjectArray[yIntCoordinate][xIntCoordinate].getCoordinatePair() +")");
 		}	
 		
@@ -254,7 +246,7 @@ public class GameBoard
 	 */
 	public void setGameStatus()
 	{
-		if(computerAttackedStatus || playerAttackedStatus)
+		if(getNumCompShipsHit() > 1 || getNumPlayerShipsHit() > 1)
 		{
 			gameOverStatus = true;
 		}
@@ -278,8 +270,26 @@ public class GameBoard
 	 * Method returns the boolean value for the isPlaced field
 	 * @return
 	 */
-	public int getPlacedShips()
+	public int getNumShipsPlaced()
 	{
-		return placedShips;
+		return shipsPlaced;
+	}
+	
+	/**
+	 * Method returns the boolean value of the computerShipsHit field
+	 * @return
+	 */
+	public int getNumCompShipsHit()
+	{
+		return computerShipsHit;
+	}
+	
+	/**
+	 * Method returns the boolean value of the playerShipsHit field
+	 * @return
+	 */
+	public int getNumPlayerShipsHit()
+	{
+		return playerShipsHit;
 	}
 }
