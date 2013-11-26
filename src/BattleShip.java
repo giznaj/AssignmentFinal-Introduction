@@ -31,16 +31,17 @@ public class BattleShip
 		Scanner userInput = new Scanner(System.in);
 		System.out.println("Your name please?");
 		playerOneName = userInput.next();
-		System.out.println("Good luck " + playerOneName + "!  You'll be playing " + playerTwoName + ".");
-		System.out.println("Battleship boards (Y and X axis are A-H and 0-7 respectively)");
-		System.out.println("Enter Alpha before Numeric at all times (i.e. C4, not 4C)");
+		System.out.println("Good luck " + playerOneName + "!  You'll be playing " + playerTwoName + " this game.");
+		System.out.println("Battleship boards: (Y and X axis are A-H and 0-7 respectively.  Both are displayed below)");
+		System.out.println("When entering coordinates, enter them in alpha/numeric order (i.e. C4, not 4C)");
+		System.out.println("First player to sink both of the other player's ships, wins!");
 		System.out.println();
 		
 		//constructors - creates a game board - 2x 8x8 Array(64)
-		NewGameBoard = new GameBoard();
+		NewGameBoard = new GameBoard(playerOneName, playerTwoName);
 		
 		//displays the player and computer empty game boards.
-		NewGameBoard.plotBoardToScreen(playerOneName, playerTwoName);
+		NewGameBoard.plotBoardToScreen();
 		
 		//places both of the computers 1x1 destroyer ships on the board
 		NewGameBoard.placeComputerShips(playerTwoName); //ship #1
@@ -65,7 +66,7 @@ public class BattleShip
 			targetCoordinates = userInput.next().toUpperCase();
 			NewGameBoard.attackComputer(targetCoordinates);
 			NewGameBoard.attackPlayer();
-			NewGameBoard.plotBoardToScreen(playerOneName, playerTwoName);
+			NewGameBoard.plotBoardToScreen();
 			
 		}while(!NewGameBoard.getGameStatus());
 		

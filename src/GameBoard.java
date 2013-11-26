@@ -20,6 +20,8 @@ public class GameBoard
 	private int playerShipsHit = 0;
 	private boolean gameOverStatus = false;
 	final Random randomGenNumber = new Random();
+	private Player PlayerOne;
+	private Player PlayerComputer;
 	
 	/**
 	 * X and Y coordinates that make up the String pair (i.e. B4).  Need this variables for when the user inputs
@@ -34,8 +36,10 @@ public class GameBoard
 	/**
 	 * Builds the game boards
 	 */
-	public GameBoard()
+	public GameBoard(String player, String computer)
 	{
+		PlayerOne = new Player(player);
+		PlayerComputer = new Player(computer);
 		xIntCoordinate = 0;
 		yIntCoordinate = 0;
 		playerObjectArray = new Coordinates[8][8];
@@ -196,11 +200,11 @@ public class GameBoard
 	 * Method plots the game board to the screen for the player or computer
 	 * @param Competitor
 	 */
-	public void plotBoardToScreen(String player, String computer)
+	public void plotBoardToScreen()
 	{
 		int counter = 0;
 		System.out.println("Legend: A3 = FREE, @@ = OCCUPIED, XX = MISS, $$ = HIT");
-		System.out.println(player + "'s BattleShip Board"); //player one 
+		System.out.println(PlayerOne.getPlayer() + "'s BattleShip Board"); //player one 
 		System.out.println("========================");
 		
 		for(yIntCoordinate = 0; yIntCoordinate < 8; ++yIntCoordinate) //Y coordinate
@@ -221,7 +225,7 @@ public class GameBoard
 		System.out.println();
 		
 		counter = 0;
-		System.out.println(computer + "'s BattleShip Board"); //computer
+		System.out.println(PlayerComputer.getPlayer() + "'s BattleShip Board"); //computer
 		System.out.println("========================");
 		
 		for(yIntCoordinate = 0; yIntCoordinate < 8; ++yIntCoordinate) //Y coordinate
