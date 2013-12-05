@@ -12,16 +12,19 @@ public class GameBoard
 	/**
 	 * Class variables
 	 */
+	final Random randomGenNumber = new Random();
+	private Ship[] playerShipArray;
+	private Ship[] computerShipArray;
 	private Coordinates[][] playerObjectArray;
 	private Coordinates[][] computerObjectArray;
 	private boolean isPlaced = false;
-	private int shipsPlaced = 0;
-	private int computerShipsHit = 0;
-	private int playerShipsHit = 0;
 	private boolean gameOverStatus = false;
-	final Random randomGenNumber = new Random();
 	private Player PlayerOne;
 	private Player PlayerComputer;
+	private int shipsPlaced = 0;
+	private int numberOfShips;
+	private int computerShipsHit = 0;
+	private int playerShipsHit = 0;
 	
 	/**
 	 * X and Y coordinates that make up the String pair (i.e. B4).  Need this variables for when the user inputs
@@ -34,12 +37,15 @@ public class GameBoard
 	private int yIntCoordinate;
 	
 	/**
-	 * Builds the game boards
+	 * Overloaded constructor.  Builds the game boards
 	 */
-	public GameBoard(String player, String computer)
+	public GameBoard(String player, String computer, int numberOfShips)
 	{
+		this.numberOfShips = numberOfShips; //number of ships for each player
 		PlayerOne = new Player(player);
 		PlayerComputer = new Player(computer);
+		
+		//array of coordinates for the player
 		xIntCoordinate = 0;
 		yIntCoordinate = 0;
 		playerObjectArray = new Coordinates[8][8];
@@ -51,6 +57,7 @@ public class GameBoard
 			}
 		}
 		
+		//array of coordinates for the computer
 		xIntCoordinate = 0;
 		yIntCoordinate = 0;
 		computerObjectArray = new Coordinates[8][8];
@@ -69,7 +76,7 @@ public class GameBoard
 	public void placePlayerShips(String shipOneCoordinates, int shipType)
 	{	
 		yCharCoordinate = shipOneCoordinates.charAt(0); //parse at position 0 to get the char part of string
-		xIntCoordinate = Character.getNumericValue(shipOneCoordinates.charAt(1)); //parse at positin 1 to get int part of string
+		xIntCoordinate = Character.getNumericValue(shipOneCoordinates.charAt(1)); //parse at position 1 to get int part of string
 		
 		char[] yCharArray = new char[]{'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'}; //convert yCharCoordinate to corresponding int value
 		int counter = 0;
@@ -91,8 +98,7 @@ public class GameBoard
 		{
 			playerObjectArray[yIntCoordinate][xIntCoordinate].setIsOccupied();
 			shipsPlaced = shipsPlaced + 1;
-			System.out.println("You have successfully placed your #" + shipsPlaced + " 1x1 destroyer on " + shipOneCoordinates);
-			
+			System.out.println("You have successfully placed your #" + shipsPlaced + " 1x1 destroyer ship on " + shipOneCoordinates);
 		}
 		
 		else
@@ -102,29 +108,38 @@ public class GameBoard
 	}
 	
 	/**
-	 * Method sets the computers 1x1 ship on the computer's game board.  Doesn't check if coordinate is already occupied
+	 * Method marks the computer's coordinates status appropriately (i.e. isOccuppied).  It also creates the ships for the
+	 * computer player based on the number of ships provided by the user at the start of the application
 	 */
 	public void placeComputerShips(String competitor)
 	{
-		do
+		int x; //counter
+		for(x = 1; x <= numberOfShips; ++x)
 		{
-			final Random randomGenNumber = new Random();
-			int yIntCoordinate;
-			int xIntCoordinate;
-			yIntCoordinate = randomGenNumber.nextInt(7);
-			xIntCoordinate = randomGenNumber.nextInt(7);
-			
-			if(!computerObjectArray[yIntCoordinate][xIntCoordinate].getIsOccupied())
+			do
 			{
-				computerObjectArray[yIntCoordinate][xIntCoordinate].setIsOccupied();
-				isPlaced = true;
-			}
-			else
-			{
-				System.out.println("Coordinates " + computerObjectArray[yIntCoordinate][xIntCoordinate].getCoordinatePair() + " 'Occupied' status is " + computerObjectArray[yIntCoordinate][xIntCoordinate].getIsOccupied());
-				isPlaced = false;
-			}
-		}while(!isPlaced);
+				final Random randomGenNumber = new Random();
+				int yIntCoordinate;
+				int xIntCoordinate;
+				yIntCoordinate = randomGenNumber.nextInt(7);
+				xIntCoordinate = randomGenNumber.nextInt(7);
+				
+				if(!computerObjectArray[yIntCoordinate][xIntCoordinate].getIsOccupied())
+				{
+					computerShipArray[numberOfShips-1] = new Ship(0); //create the ship objects for the computer
+					computerObjectArray[yIntCoordinate][xIntCoordinate].setIsOccupied();
+					isPlaced = true;
+				}
+				else
+				{
+					System.out.println("Coordinates " + computerObjectArray[yIntCoordinate][xIntCoordinate].getCoordinatePair() + " 'Occupied' status is " + computerObjectArray[yIntCoordinate][xIntCoordinate].getIsOccupied());
+					System.out.println(PlayerComputer + " please choose again");
+					isPlaced = false;
+				}
+			}while(!isPlaced);
+		}
+		
+		System.out.println("HAL has successfully placed his " + numberOfShips + " 1x1 destroyer(s) on his board");
 	}
 	
 	/**
@@ -177,20 +192,29 @@ public class GameBoard
 	{
 		int yIntCoordinate;
 		int xIntCoordinate;
-		yIntCoordinate = randomGenNumber.nextInt(8);
-		xIntCoordinate = randomGenNumber.nextInt(8);
+		do //checks for a coordinate pair that HAL hasn't fired at yet (isAttacked, isHit and isSunk == false at this point)
+		{
+			yIntCoordinate = randomGenNumber.nextInt(8);
+			xIntCoordinate = randomGenNumber.nextInt(8);
+		}while(playerObjectArray[yIntCoordinate][xIntCoordinate].getIsAttacked());
 	
 		if(playerObjectArray[yIntCoordinate][xIntCoordinate].getIsOccupied())
 		{
+			playerObjectArray[yIntCoordinate][xIntCoordinate].setIsAttacked();
 			playerObjectArray[yIntCoordinate][xIntCoordinate].setIsHit();
 			playerShipsHit = playerShipsHit + 1;
 			System.out.println("Computer has hit your ship! (" + playerObjectArray[yIntCoordinate][xIntCoordinate].getCoordinatePair() +")");
 		}
 		
-		else
+		else if(!playerObjectArray[yIntCoordinate][xIntCoordinate].getIsOccupied())
 		{
 			playerObjectArray[yIntCoordinate][xIntCoordinate].setIsAttacked();
-			System.out.println("Computer missed your ship! (" + playerObjectArray[yIntCoordinate][xIntCoordinate].getCoordinatePair() +")");
+			System.out.println("Computer has missed your ship! (" + playerObjectArray[yIntCoordinate][xIntCoordinate].getCoordinatePair() +")");
+		}
+		
+		else
+		{
+			//todo
 		}	
 		
 		setGameStatus();
@@ -251,7 +275,7 @@ public class GameBoard
 	 */
 	public void setGameStatus()
 	{
-		if(getNumCompShipsHit() > 1 || getNumPlayerShipsHit() > 1)
+		if(getNumCompShipsHit() >= numberOfShips || getNumPlayerShipsHit() >= numberOfShips)
 		{
 			gameOverStatus = true;
 		}
@@ -266,7 +290,7 @@ public class GameBoard
 	 * Method returns the boolean value for the gameOverStatus field.  (if true, the game is over)
 	 * @return
 	 */
-	public boolean getGameStatus()
+	public boolean getGameOverStatus()
 	{	
 		return gameOverStatus;
 	}

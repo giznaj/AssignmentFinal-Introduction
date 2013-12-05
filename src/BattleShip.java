@@ -13,6 +13,7 @@ public class BattleShip
 	private GameBoard NewGameBoard; //new game board - holds 2x array(64)
 	String playerOneName; //person player (you)
 	final String playerTwoName = "HAL"; //computer player ("HAL")
+	private int numberOfShips;
 	
 	/**
 	 * @param args not used
@@ -34,32 +35,36 @@ public class BattleShip
 		System.out.println("Good luck " + playerOneName + "!  You'll be playing " + playerTwoName + " this game.");
 		System.out.println("Battleship boards: (Y and X axis are A-H and 0-7 respectively.  Both are displayed below)");
 		System.out.println("When entering coordinates, enter them in alpha/numeric order (i.e. C4, not 4C)");
-		System.out.println("First player to sink both of the other player's ships, wins!");
-		System.out.println();
+		
+		//get number of ships for each player for the game
+		do
+		{
+			System.out.println("okay, let's get started.  How many ships do you want to play with? (1, 2 or 3)");
+			numberOfShips = userInput.nextInt();
+		}while(numberOfShips <= 0 || numberOfShips >= 4);
+		
 		
 		//constructors - creates a game board - 2x 8x8 Array(64)
-		NewGameBoard = new GameBoard(playerOneName, playerTwoName);
+		NewGameBoard = new GameBoard(playerOneName, playerTwoName, numberOfShips);
 		
 		//displays the player and computer empty game boards.
 		NewGameBoard.plotBoardToScreen();
 		
-		//places both of the computers 1x1 destroyer ships on the board
-		NewGameBoard.placeComputerShips(playerTwoName); //ship #1
-		NewGameBoard.placeComputerShips(playerTwoName); //ship #2
-		System.out.println("HAL has successfully placed his 2 1x1 destroyers on his board");
-		
-		
-		do //placing the player's 1x1 destroyer ships on the board (2x)
+		//places player's 1x1 destroyer ships on the board (numberOfShips)
+		do 
 		{
 			int shipType = 0;
 			String shipOneCoordinates;
 			System.out.println("Let's place your #" + (NewGameBoard.getNumShipsPlaced() + 1) + " 1x1 destroyer on the board.  Please select a coordinate pair (i.e. C4)");
 			shipOneCoordinates = userInput.next().toUpperCase();
-			NewGameBoard.placePlayerShips(shipOneCoordinates, shipType); //ship #1
-		}while(NewGameBoard.getNumShipsPlaced() < 2);
+			NewGameBoard.placePlayerShips(shipOneCoordinates, shipType);
+		}while(NewGameBoard.getNumShipsPlaced() < numberOfShips);
 		
+		//places the computers 1x1 destroyer ships on the board
+		NewGameBoard.placeComputerShips(playerTwoName);
 		
-		do //the guessing begins here (battle).  The battle continues until a player sinks 2 of the opponents ships
+		//the guessing begins here (battle).  The battle continues until a player sinks all of the opponents ships
+		do 
 		{
 			String targetCoordinates;
 			System.out.println(playerOneName + ", fire away and select a coordinate pair to shoot (i.e. F2)");
@@ -68,7 +73,7 @@ public class BattleShip
 			NewGameBoard.attackPlayer();
 			NewGameBoard.plotBoardToScreen();
 			
-		}while(!NewGameBoard.getGameStatus());
+		}while(!NewGameBoard.getGameOverStatus());
 		
 		System.out.println("Great game guys!");
 	}

@@ -157,12 +157,30 @@
 		}
 		
 		/**
+		 * Returns the boolean value for the isAttacked status for the given coordinate pair
+		 * @return
+		 */
+		public boolean getIsAttacked()
+		{
+			return isAttacked;
+		}
+		
+		/**
 		 * Returns the boolean value assigned to isHit field
 		 * @return
 		 */
 		public boolean getIsHit()
 		{
 			return isHit;
+		}
+		
+		/**
+		 * Returns the boolean value assign to the isSunk field
+		 * @return
+		 */
+		public boolean getIsSunk()
+		{
+			return isSunk;
 		}
 		
 		/**

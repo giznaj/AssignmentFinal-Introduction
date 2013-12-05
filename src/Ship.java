@@ -41,9 +41,14 @@
 			{
 				this.shipLength = 1;
 			}
-			else 
+			else if(shipType == 1)
 			{
 				this.shipLength = 2;
+			}
+			
+			else
+			{
+				System.out.println("That is not a valid shipType");
 			}
 		}
 		
