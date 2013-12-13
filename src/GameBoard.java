@@ -15,8 +15,8 @@ public class GameBoard
 	final Random randomGenNumber = new Random();
 	private Ship[] playerShipArray;
 	private Ship[] computerShipArray;
-	private Coordinates[][] playerObjectArray;
-	private Coordinates[][] computerObjectArray;
+	private Coordinates[][] playerCoordinateArray;
+	private Coordinates[][] computerCoordinateArray;
 	private boolean isPlaced = false;
 	private boolean gameOverStatus = false;
 	private Player PlayerOne;
@@ -48,24 +48,24 @@ public class GameBoard
 		//array of coordinates for the player
 		xIntCoordinate = 0;
 		yIntCoordinate = 0;
-		playerObjectArray = new Coordinates[8][8];
+		playerCoordinateArray = new Coordinates[8][8];
 		for(yIntCoordinate = 0; yIntCoordinate < 8; ++yIntCoordinate) //Y coordinate
 		{
 			for(xIntCoordinate = 0; xIntCoordinate < 8; ++xIntCoordinate) //X coordinate
 			{
-				playerObjectArray[yIntCoordinate][xIntCoordinate] = new Coordinates(yIntCoordinate, xIntCoordinate);
+				playerCoordinateArray[yIntCoordinate][xIntCoordinate] = new Coordinates(yIntCoordinate, xIntCoordinate);
 			}
 		}
 		
 		//array of coordinates for the computer
 		xIntCoordinate = 0;
 		yIntCoordinate = 0;
-		computerObjectArray = new Coordinates[8][8];
+		computerCoordinateArray = new Coordinates[8][8];
 		for(yIntCoordinate = 0; yIntCoordinate < 8; ++yIntCoordinate) //Y coordinate
 		{
 			for(xIntCoordinate = 0; xIntCoordinate < 8; ++xIntCoordinate) //X coordinate
 			{
-				computerObjectArray[yIntCoordinate][xIntCoordinate] = new Coordinates(yIntCoordinate, xIntCoordinate);
+				computerCoordinateArray[yIntCoordinate][xIntCoordinate] = new Coordinates(yIntCoordinate, xIntCoordinate);
 			}
 		}
 	}
@@ -73,8 +73,9 @@ public class GameBoard
 	/**
 	 * Method places the players ship(s) on the board.
 	 */
-	public void placePlayerShips(String shipOneCoordinates, int shipType)
+	public void placePlayerShips(String shipOneCoordinates, int shipType, int shipNumber)
 	{	
+		playerShipArray = new Ship[numberOfShips];
 		yCharCoordinate = shipOneCoordinates.charAt(0); //parse at position 0 to get the char part of string
 		xIntCoordinate = Character.getNumericValue(shipOneCoordinates.charAt(1)); //parse at position 1 to get int part of string
 		
@@ -94,9 +95,10 @@ public class GameBoard
 			}
 		}while(yIntCoordinate != counter);
 		
-		if(!playerObjectArray[yIntCoordinate][xIntCoordinate].getIsOccupied()) //check if ship already exists on coordinate
+		if(!playerCoordinateArray[yIntCoordinate][xIntCoordinate].getIsOccupied()) //check if ship already exists on coordinate
 		{
-			playerObjectArray[yIntCoordinate][xIntCoordinate].setIsOccupied();
+			playerShipArray[shipNumber] = new Ship(0);
+			playerCoordinateArray[yIntCoordinate][xIntCoordinate].setIsOccupied();
 			shipsPlaced = shipsPlaced + 1;
 			System.out.println("You have successfully placed your #" + shipsPlaced + " 1x1 destroyer ship on " + shipOneCoordinates);
 		}
@@ -113,6 +115,7 @@ public class GameBoard
 	 */
 	public void placeComputerShips(String competitor)
 	{
+		computerShipArray = new Ship[numberOfShips];
 		int x; //counter
 		for(x = 1; x <= numberOfShips; ++x)
 		{
@@ -124,15 +127,15 @@ public class GameBoard
 				yIntCoordinate = randomGenNumber.nextInt(7);
 				xIntCoordinate = randomGenNumber.nextInt(7);
 				
-				if(!computerObjectArray[yIntCoordinate][xIntCoordinate].getIsOccupied())
+				if(!computerCoordinateArray[yIntCoordinate][xIntCoordinate].getIsOccupied()) //check if coordinates are occupied
 				{
-					computerShipArray[numberOfShips-1] = new Ship(0); //create the ship objects for the computer
-					computerObjectArray[yIntCoordinate][xIntCoordinate].setIsOccupied();
+					computerShipArray[x-1] = new Ship(0); //create the ship objects for the computer
+					computerCoordinateArray[yIntCoordinate][xIntCoordinate].setIsOccupied();
 					isPlaced = true;
 				}
 				else
 				{
-					System.out.println("Coordinates " + computerObjectArray[yIntCoordinate][xIntCoordinate].getCoordinatePair() + " 'Occupied' status is " + computerObjectArray[yIntCoordinate][xIntCoordinate].getIsOccupied());
+					System.out.println("Coordinates " + computerCoordinateArray[yIntCoordinate][xIntCoordinate].getCoordinatePair() + " 'Occupied' status is " + computerCoordinateArray[yIntCoordinate][xIntCoordinate].getIsOccupied());
 					System.out.println(PlayerComputer + " please choose again");
 					isPlaced = false;
 				}
@@ -169,17 +172,17 @@ public class GameBoard
 			}
 		}while(yIntCoordinate != counter);
 		
-		if(computerObjectArray[yIntCoordinate][xIntCoordinate].getIsOccupied())
+		if(computerCoordinateArray[yIntCoordinate][xIntCoordinate].getIsOccupied())
 		{
-			computerObjectArray[yIntCoordinate][xIntCoordinate].setIsHit();
+			computerCoordinateArray[yIntCoordinate][xIntCoordinate].setIsHit();
 			computerShipsHit = computerShipsHit + 1;
-			System.out.println("You hit the computer's ship! (" + computerObjectArray[yIntCoordinate][xIntCoordinate].getCoordinatePair() +")");
+			System.out.println("You hit the computer's ship! (" + computerCoordinateArray[yIntCoordinate][xIntCoordinate].getCoordinatePair() +")");
 		}
 		
 		else
 		{
-			computerObjectArray[yIntCoordinate][xIntCoordinate].setIsAttacked();
-			System.out.println("You missed the computer's ship! (" + computerObjectArray[yIntCoordinate][xIntCoordinate].getCoordinatePair() +")");
+			computerCoordinateArray[yIntCoordinate][xIntCoordinate].setIsAttacked();
+			System.out.println("You missed the computer's ship! (" + computerCoordinateArray[yIntCoordinate][xIntCoordinate].getCoordinatePair() +")");
 		}
 		
 		setGameStatus();
@@ -196,20 +199,20 @@ public class GameBoard
 		{
 			yIntCoordinate = randomGenNumber.nextInt(8);
 			xIntCoordinate = randomGenNumber.nextInt(8);
-		}while(playerObjectArray[yIntCoordinate][xIntCoordinate].getIsAttacked());
+		}while(playerCoordinateArray[yIntCoordinate][xIntCoordinate].getIsAttacked());
 	
-		if(playerObjectArray[yIntCoordinate][xIntCoordinate].getIsOccupied())
+		if(playerCoordinateArray[yIntCoordinate][xIntCoordinate].getIsOccupied())
 		{
-			playerObjectArray[yIntCoordinate][xIntCoordinate].setIsAttacked();
-			playerObjectArray[yIntCoordinate][xIntCoordinate].setIsHit();
+			playerCoordinateArray[yIntCoordinate][xIntCoordinate].setIsAttacked();
+			playerCoordinateArray[yIntCoordinate][xIntCoordinate].setIsHit();
 			playerShipsHit = playerShipsHit + 1;
-			System.out.println("Computer has hit your ship! (" + playerObjectArray[yIntCoordinate][xIntCoordinate].getCoordinatePair() +")");
+			System.out.println("Computer has hit your ship! (" + playerCoordinateArray[yIntCoordinate][xIntCoordinate].getCoordinatePair() +")");
 		}
 		
-		else if(!playerObjectArray[yIntCoordinate][xIntCoordinate].getIsOccupied())
+		else if(!playerCoordinateArray[yIntCoordinate][xIntCoordinate].getIsOccupied())
 		{
-			playerObjectArray[yIntCoordinate][xIntCoordinate].setIsAttacked();
-			System.out.println("Computer has missed your ship! (" + playerObjectArray[yIntCoordinate][xIntCoordinate].getCoordinatePair() +")");
+			playerCoordinateArray[yIntCoordinate][xIntCoordinate].setIsAttacked();
+			System.out.println("Computer has missed your ship! (" + playerCoordinateArray[yIntCoordinate][xIntCoordinate].getCoordinatePair() +")");
 		}
 		
 		else
@@ -227,7 +230,7 @@ public class GameBoard
 	public void plotBoardToScreen()
 	{
 		int counter = 0;
-		System.out.println("Legend: A3 = FREE, @@ = OCCUPIED, XX = MISS, $$ = HIT");
+		System.out.println("Legend: Alpha/Numeric = FREE, @@ = OCCUPIED, XX = MISS, $$ = HIT");
 		System.out.println(PlayerOne.getPlayer() + "'s BattleShip Board"); //player one 
 		System.out.println("========================");
 		
@@ -235,7 +238,7 @@ public class GameBoard
 		{
 			for(xIntCoordinate = 0; xIntCoordinate < 8; ++xIntCoordinate) //X coordinate
 			{
-				System.out.printf("%s ", playerObjectArray[yIntCoordinate][xIntCoordinate].getDisplayStatus());
+				System.out.printf("%s ", playerCoordinateArray[yIntCoordinate][xIntCoordinate].getDisplayStatus());
 				counter++;
     	
 				if (counter == 8)
@@ -256,7 +259,7 @@ public class GameBoard
 		{
 			for(xIntCoordinate = 0; xIntCoordinate < 8; ++xIntCoordinate) //X coordinate
 			{
-				System.out.printf("%s ", computerObjectArray[yIntCoordinate][xIntCoordinate].getDisplayStatus());
+				System.out.printf("%s ", computerCoordinateArray[yIntCoordinate][xIntCoordinate].getDisplayStatus());
 				counter++;
 		
 				if (counter == 8)
