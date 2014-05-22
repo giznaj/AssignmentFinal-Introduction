@@ -45,6 +45,7 @@ public class BattleShip
 				System.out.println("Okay, let's get started.  How many ships do you want to play with? (1, 2 or 3)");
 				numberOfShips = userInput.nextInt();
 			}while(numberOfShips <= 0 || numberOfShips >= 4);
+			
 		}catch (InputMismatchException erMsg)
 		{
 			System.out.println("Error: " + erMsg.toString());
