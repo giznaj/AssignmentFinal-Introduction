@@ -1,6 +1,7 @@
 /**Description of Coordinates.java
  * Represents Coordinates on a 10 x 10 BattleShip Gameboard
  * Assignment #4
+ * Used for AssignmentFinal-Intro
  *
  * @author Aaron Toth
  */
